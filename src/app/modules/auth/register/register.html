@@ -1,0 +1,37 @@
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <label>Name</label>
+  <input type="text" formControlName="firstName" />
+  @if (registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched) {
+    <div style="color: red;">First name is required and must contain only letters.</div>
+  }
+
+  <label>User Name</label>
+  <input type="text" formControlName="userName" />
+  @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
+    <div style="color: red;">Username is required (letters, numbers, or @ only).</div>
+  }
+
+  <label>Email</label>
+  <input type="email" formControlName="email" />
+  @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+    <div style="color: red;">Please enter a valid email address.</div>
+  }
+
+  <label>Phone Number</label>
+  <input type="number" formControlName="phNumber" />
+  @if (registerForm.get('phNumber')?.invalid && registerForm.get('phNumber')?.touched) {
+    <div style="color: red;">Phone number must be 10 digits.</div>
+  }
+
+  <label>Password</label>
+  <input type="password" formControlName="password">
+
+  <label>Confirm Password</label>
+  <input type="password" formControlName="confirmpassword">
+  @if (registerForm.get('confirmpassword')?.touched && !passwordsMatch()) {
+    <div style="color: red;">Passwords do not match.</div>
+  }
+
+  <button type="submit" [disabled]="isFormInValid()">Submit</button>
+</form>

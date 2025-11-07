@@ -1,0 +1,25 @@
+<div class="form">
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+  <label>Email</label>
+  <input type="email" formControlName="email" />
+  
+  @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+    <small style="color:red;">Please enter a valid email</small>
+  }
+
+  <label>Password</label>
+  <input type="password" formControlName="password" />
+
+  @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+    <small style="color:red;">Password must be at least 6 characters</small>
+  }
+
+  <button type="submit">Login</button>
+
+</form>
+  <button class="reg" routerLink="/register"> Register</button>
+
+
+</div>
