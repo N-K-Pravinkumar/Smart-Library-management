@@ -1,0 +1,27 @@
+<nav>
+  <div class="nav-top">
+    <div class="lib-name">Wecodee Smart Library</div>
+    <div class="username">{{ username }}</div>
+  </div>
+
+  <div class="nav-left">
+    @if (role === 'librarian') {
+      <a routerLink="/librarian/home" routerLinkActive="active">Home</a>
+      <a routerLink="/librarian/book" routerLinkActive="active">Book</a>
+      <a routerLink="/librarian/transaction" routerLinkActive="active">Book Transaction</a>
+      <a routerLink="/librarian/reports" routerLinkActive="active">Reports</a>
+    }
+
+    @if (role === 'student') {
+      <a routerLink="/student/home" routerLinkActive="active">Home</a>
+      <a routerLink="/student/book" routerLinkActive="active">Book</a>
+      <a routerLink="/student/reports" routerLinkActive="active">Reports</a>
+    }
+
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+</nav>
+
+<div class="content-area">
+  <router-outlet></router-outlet>
+</div>

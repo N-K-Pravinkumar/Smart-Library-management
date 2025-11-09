@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+/* === Top Navigation Bar === */
+.nav-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(135deg, #007ea7, #00a8cc);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.nav-top .lib-name {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.nav-top .user-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-top .username {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* === Logout Button === */
+.logout-btn {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: white;
+  color: #007ea7;
+  transform: scale(1.05);
+}
+
+/* === Sidebar Navigation === */
+.nav-left {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 60px);
+  background: #1f3c88;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 14px;
+}
+
+.nav-left a {
+  text-decoration: none;
+  color: #e0e7ff;
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-left a:hover,
+.nav-left a.active {
+  background: linear-gradient(135deg, #00a8cc, #007ea7);
+  color: #fff;
+  transform: translateX(5px);
+}
+
+/* === Main Content Area === */
+.content-area {
+  margin-left: 250px;
+  margin-top: 60px;
+  padding: 30px;
+  min-height: calc(100vh - 60px);
+  background-color: #f4f7fb;
+  overflow-y: auto;
+}

@@ -1,0 +1,39 @@
+<h2>Student Borrowing Dashboard</h2>
+
+<form [formGroup]="filterForm" class="filter-container">
+  <input
+    type="text"
+    placeholder="Search by Username, Student ID, or Phone Number"
+    formControlName="searchTerm"
+  />
+
+  <select formControlName="sortOrder">
+    <option value="desc">Descending</option>
+    <option value="asc">Ascending</option>
+  </select>
+
+  <div class="filter-buttons">
+    <button type="button" (click)="setFilter('all')" [class.active]="filterForm.value.filterStatus === 'all'">All</button>
+    <button type="button" (click)="setFilter('borrowed')" [class.active]="filterForm.value.filterStatus === 'borrowed'">Borrowed</button>
+    <button type="button" (click)="setFilter('unborrowed')" [class.active]="filterForm.value.filterStatus === 'unborrowed'">Unborrowed</button>
+  </div>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Student ID</th>
+      <th>Username</th>
+      <th>Phone Number</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of filteredStudents">
+      <td>{{ student.id }}</td>
+      <td>{{ student.username }}</td>
+      <td>{{ student.phone }}</td>
+      <td>{{ student.status }}</td>
+    </tr>
+  </tbody>
+</table>

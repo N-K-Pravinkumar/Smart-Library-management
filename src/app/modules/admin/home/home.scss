@@ -1,0 +1,70 @@
+.dashboard {
+  padding: 2rem;
+  text-align: center;
+  background: #f8f9fc;
+  min-height: 100vh;
+
+  .title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease;
+    cursor: pointer;
+
+    h3 {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .total-books {
+    border-left: 6px solid #007bff;
+  }
+
+  .borrowed {
+    border-left: 6px solid #ff9800;
+  }
+
+  .returned {
+    border-left: 6px solid #4caf50;
+  }
+
+  .not-returned {
+    border-left: 6px solid #f44336;
+  }
+
+  .members {
+    border-left: 6px solid #9c27b0;
+  }
+
+  .fine {
+    border-left: 6px solid #795548;
+  }
+}
