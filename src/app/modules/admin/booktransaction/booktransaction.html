@@ -1,140 +1,46 @@
-<div class="container">
-  <div class="card">
-    <div class="header">
-      <div>
-        <div class="title">Book & Student Transactions</div>
-        <div class="subtitle">
-          Search by book or student and view detailed borrowing info
-        </div>
-      </div>
-
-      <form [formGroup]="filterForm" class="controls">
-        <input
-          formControlName="searchText"
-          placeholder="Search by Book ID / Student ID / Name"
-          class="search"
-        />
-        <select formControlName="viewFilter" class="filter-btn">
-          <option value="all">All</option>
-          <option value="book">Book View</option>
-          <option value="student">Student View</option>
-        </select>
-        <button type="button" (click)="resetFilters()" class="filter-btn">
-          Reset
-        </button>
-      </form>
-    </div>
-
-    <!-- Combined View -->
-    @if (viewMode === 'all') {
-      <table>
-        <thead>
-          <tr>
-            <th>Borrow ID</th>
-            <th>Book ID</th>
-            <th>Book Name</th>
-            <th>Student ID</th>
-            <th>Student Name</th>
-            <th>Borrow Date</th>
-            <th>Return Date</th>
-            <th>Overdue</th>
-            <th>Fine (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (record of filteredRecords; track record.borrowId) {
-            <tr>
-              <td>{{ record.borrowId }}</td>
-              <td>{{ record.bookId }}</td>
-              <td>{{ record.bookName }}</td>
-              <td>{{ record.userId }}</td>
-              <td>{{ record.userName }}</td>
-              <td>{{ record.borrowDate }}</td>
-              <td>
-                @if (record.returnDate) {
-                  {{ record.returnDate }}
-                } @else {
-                  <span class="text-muted">Not returned</span>
-                }
-              </td>
-              <td>{{ record.overDueDays }}</td>
-              <td>{{ record.fine | number: '1.2-2' }}</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    }
-
-    <!-- Book View -->
-    @if (viewMode === 'book') {
-      <table>
-        <thead>
-          <tr>
-            <th>Book ID</th>
-            <th>Book Name</th>
-            <th>Last Borrowed By</th>
-            <th>Borrow Date</th>
-            <th>Return Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (book of filteredRecords; track book.bookId) {
-            <tr>
-              <td>{{ book.bookId }}</td>
-              <td>{{ book.bookName }}</td>
-              <td>{{ getLastBorrower(book.bookId) }}</td>
-              <td>{{ book.borrowDate }}</td>
-              <td>
-                @if (book.returnDate) {
-                  {{ book.returnDate }}
-                } @else {
-                  <span class="text-muted">Not returned</span>
-                }
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    }
-
-    <!-- Student View -->
-    @if (viewMode === 'student') {
-      <table>
-        <thead>
-          <tr>
-            <th>Student ID</th>
-            <th>Student Name</th>
-            <th>Book IDs</th>
-            <th>Borrow Dates</th>
-            <th>Return Dates</th>
-            <th>Overdue</th>
-            <th>Fine (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (student of filteredRecords; track student.userId) {
-            <tr>
-              <td>{{ student.userId }}</td>
-              <td>{{ student.userName }}</td>
-              <td>{{ student.bookId }}</td>
-              <td>{{ student.borrowDate }}</td>
-              <td>
-                @if (student.returnDate) {
-                  {{ student.returnDate }}
-                } @else {
-                  <span class="text-muted">Not returned</span>
-                }
-              </td>
-              <td>{{ student.overDueDays }}</td>
-              <td>{{ student.fine | number: '1.2-2' }}</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    }
-
-    @if (filteredRecords.length === 0) {
-      <div class="no-results">No records match your search / filter.</div>
-    }
-  </div>
+<div class="filter-container">
+  <form [formGroup]="filterForm">
+    <input formControlName="searchText" placeholder="book name or student name" />
+    
+    <select formControlName="viewFilter">
+      <option value="all">All</option>
+      <option value="book">Book</option>
+      <option value="student">Student</option>
+    </select>
+    
+    <button type="button" (click)="resetFilters()">Reset</button>
+  </form>
 </div>
+
+<table class="records-table">
+  <thead>
+    <tr>
+      <th>Book ID</th>
+      <th>Book Name</th>
+      <th>Student ID</th>
+      <th>Student Name</th>
+      <th>Borrow Date</th>
+      <th>Return Date</th>
+      <th>Overdue Days</th>
+      <th>Fine</th>
+      <th>Paid</th>
+      <!-- <th>Action</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let record of filteredRecords">
+      <td>{{ record.bookId }}</td>
+      <td>{{ record.bookName }}</td>
+      <td>{{ record.userId }}</td>
+      <td>{{ record.userName }}</td>
+      <td>{{ record.borrowDate }}</td>
+      <td>{{ record.returnDate || 'N/A' }}</td>
+      <td>{{ record.overDueDays }}</td>
+      <td>{{ record.fine }}</td>
+      <td>{{ record.paid ? 'Yes' : 'No' }}</td>
+      <!-- <td>
+        <button *ngIf="!record.paid" (click)="markAsPaid(record)">Mark as Paid</button>
+      </td> -->
+    </tr>
+  </tbody>
+</table>

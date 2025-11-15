@@ -1,0 +1,139 @@
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.container h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.filter-container input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  flex: 1;
+  min-width: 200px;
+  font-size: 0.9rem;
+}
+
+.filter-buttons button {
+  padding: 0.45rem 0.75rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 0.9rem;
+}
+
+.filter-buttons button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.filter-buttons button:hover:not(.active) {
+  background-color: #ddd;
+}
+
+.download-btn {
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #28a745;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.download-btn:hover {
+  background-color: #218838;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+table th,
+table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.9rem;
+}
+
+table thead {
+  background-color: #f4f4f4;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+  background-color: #e6f2ff;
+}
+
+.borrowed {
+  color: #fff;
+  background-color: #dc3545;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.returned {
+  color: #fff;
+  background-color: #28a745;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.due-soon {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+.overdue {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.total-fine {
+  text-align: right;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .filter-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  table th,
+  table td {
+    font-size: 0.8rem;
+  }
+
+  .download-btn {
+    width: 100%;
+  }
+}

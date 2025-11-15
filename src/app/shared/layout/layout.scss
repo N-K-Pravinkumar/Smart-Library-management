@@ -1,99 +1,111 @@
+// .navtop{
+//   margin: 0%;
+//   margin-top: 0%;
+//   padding: 0%;
+//   height: 7vh;
+//   text-align: center;
+  
+//   border-radius: 4px;
+//   display: inline;
+//   display: flex;
+//   flex-direction: row;
+//   margin-left: 220px;
+//   border: 1px solid white;
+// }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-/* === Top Navigation Bar === */
-.nav-top {
+.navtop {
+  position:absolute;
+  top: 5px;
+  left: 228px;
+  right: 0;
+  height: 60px;
+  background-color: #ffffff;
+  border-bottom: 2px solid #c7c9cb;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: #000000;
+  z-index: 1000;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.navleft {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 60px;
-  background: linear-gradient(135deg, #007ea7, #00a8cc);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 30px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-}
-
-.nav-top .lib-name {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.nav-top .user-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.nav-top .username {
-  font-size: 15px;
-  font-weight: 500;
-}
-
-/* === Logout Button === */
-.logout-btn {
-  background: transparent;
-  border: 2px solid white;
-  color: white;
-  padding: 6px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.logout-btn:hover {
-  background: white;
-  color: #007ea7;
-  transform: scale(1.05);
-}
-
-/* === Sidebar Navigation === */
-.nav-left {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  width: 250px;
-  height: calc(100vh - 60px);
-  background: #1f3c88;
+  width: 220px;
+  height: 100vh;
+  background-color: white;
+  border-right: 2px solid rgb(160, 202, 247);
+  border-radius:100px ;
+  padding-top: 80px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  gap: 14px;
+  align-items: flex-start;
+  gap: 10px;
 }
 
-.nav-left a {
+.navleft a {
   text-decoration: none;
-  color: #e0e7ff;
+  color: #0a0303;
+  padding: 12px 20px;
+  width: 100%;
+  display: block;
+  transition: all 0.1s ease-out;
+  border-radius: 100px;
+}
+
+.navleft a:hover,
+.navleft a.active {
+  background-color: #e8f2f9;
+  color: rgb(71, 126, 171);
+
+}
+.username {
+  position: absolute;
+  // top: px;
+  right: 20px;
   font-size: 16px;
-  padding: 10px 15px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  color: #333;
+  flex-direction: row;
+  text-align: end;
+  color: #000000;
+  font-family:monospace;
+
 }
 
-.nav-left a:hover,
-.nav-left a.active {
-  background: linear-gradient(135deg, #00a8cc, #007ea7);
+.logout {
+  margin-top: auto;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  background-color: #460e08;
+  border: none;
   color: #fff;
-  transform: translateX(5px);
+  padding: 10px 25px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-/* === Main Content Area === */
-.content-area {
-  margin-left: 250px;
+.logout:hover {
+  background-color: #e2c3c3;
+}
+
+/* Content Area */
+.contentarea {
+  margin-left: 220px;
   margin-top: 60px;
-  padding: 30px;
+  padding: 20px;
+  background: #fff;
   min-height: calc(100vh - 60px);
-  background-color: #f4f7fb;
-  overflow-y: auto;
 }

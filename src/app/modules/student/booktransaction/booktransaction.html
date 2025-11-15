@@ -1,0 +1,33 @@
+<div class="filter-container">
+  <form [formGroup]="filterForm">
+    <input formControlName="searchText" placeholder="Search by book ID or book name" />
+    <button type="button" (click)="resetFilters()">Reset</button>
+  </form>
+</div>
+
+<table class="records-table">
+  <thead>
+    <tr>
+      <!-- <th>Book ID</th> -->
+      <th>Book Name</th>
+      <!-- <th>Student ID</th> -->
+      <!-- <th>Student Name</th> -->
+      <th>Borrow Date</th>
+      <th>Overdue Days</th>
+      <th>Fine</th>
+      <th>Paid</th>
+      <th>Return</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let record of filteredRecords">
+      <td>{{ record.book.bookName }}</td>
+      <td>{{ record.borrowDate }}</td>
+      <td>{{ record.overDueDays }}</td>
+      <td>{{ record.fine }}</td>
+      <td>{{ record.pay ? 'Yes' : 'No' }}</td>
+      <td>
+        <button *ngIf="!record.returned" (click)="handleReturn(record)">Return</button>
+      </td>
+  </tbody>
+</table>

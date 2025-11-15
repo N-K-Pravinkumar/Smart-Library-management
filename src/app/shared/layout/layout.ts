@@ -12,29 +12,40 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./layout.scss']
 })
 export class Layout implements OnInit {
-  username = 'Pravin';
+  username = localStorage.getItem('username') || '';
   role: 'librarian' | 'student' | '' = '';
+  baseRoute = '';
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.detectRoleFromUrl();
-
-    // Listen for URL changes to update role dynamically
+    this.loadUserInfo();
+    
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => this.detectRoleFromUrl());
+      .subscribe(() => this.loadUserInfo());
   }
 
-  detectRoleFromUrl(): void {
-    const currentUrl = this.router.url;
-    if (currentUrl.includes('/librarian')) {
-      this.role = 'librarian';
-    } else if (currentUrl.includes('/student')) {
-      this.role = 'student';
-    } else {
-      this.role = '';
+  loadUserInfo(): void {
+    const storedRole = localStorage.getItem('role');
+    const storedUsername = localStorage.getItem('username');
+    const studentIdStr = localStorage.getItem('token');
+    if (!studentIdStr || !storedRole) {
+      //alert('No logged in. Please login first.');
+      this.router.navigate(['/login']);
+
+      return;
+    }else if(storedRole=='student'){
+      this.baseRoute=this.role=='student' ? '/student' : '';
+    }else if(storedRole=='librarian'){
+      this.baseRoute=this.role=='librarian' ? '/librarian' : '';
     }
+
+    this.role = storedRole === 'librarian' || storedRole === 'student' ? storedRole : '';
+    this.username = storedUsername || '';
+
+    this.baseRoute = this.role === 'librarian' ? '/librarian' :
+                     this.role === 'student' ? '/student' : '';
   }
 
   logout(): void {

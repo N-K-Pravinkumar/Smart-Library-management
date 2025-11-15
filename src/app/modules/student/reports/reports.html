@@ -1,0 +1,57 @@
+<div class="container">
+  <h2>My Borrowing Report</h2>
+
+  <form [formGroup]="filterForm" class="filter-container">
+    <input type="text" placeholder="Search by Book ID / Name" formControlName="searchTerm" />
+
+    <div class="filter-buttons">
+      <button type="button" (click)="setFilter('all')" [class.active]="filterForm.value.filterStatus === 'all'">All</button>
+      <button type="button" (click)="setFilter('borrowed')" [class.active]="filterForm.value.filterStatus === 'borrowed'">Borrowed</button>
+      <button type="button" (click)="setFilter('returned')" [class.active]="filterForm.value.filterStatus === 'returned'">Returned</button>
+    </div>
+  </form>
+
+  <button class="download-btn" (click)="downloadPDF()">Download as PDF</button>
+
+  <div id="reportTable">
+    <table>
+      <thead>
+        <tr>
+          <th>Book ID</th>
+          <th>Book Name</th>
+          <th>Borrow Date</th>
+          <th>Return Date</th>
+          <th>Status</th>
+          <th>Days Left / Overdue</th>
+          <th>Fine (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of filteredRecords">
+          <td>{{ record.bookId }}</td>
+          <td>{{ record.bookName }}</td>
+          <td>{{ record.borrowDate | date:'mediumDate' }}</td>
+          <td>
+            <span *ngIf="record.returnDate">{{ record.returnDate | date:'mediumDate' }}</span>
+            <span *ngIf="!record.returnDate" class="text-muted">Not returned</span>
+          </td>
+          <td>
+            <span [ngClass]="record.returned ? 'returned' : 'borrowed'">
+              {{ record.returned ? 'Returned' : 'Borrowed' }}
+            </span>
+          </td>
+          <td>
+            <span [ngClass]="record.daysRemaining < 0 ? 'overdue' : 'due-soon'">
+              {{ record.daysRemaining < 0 ? (-record.daysRemaining + ' days overdue') : (record.daysRemaining + ' days left') }}
+            </span>
+          </td>
+          <td>{{ record.fine | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="total-fine">
+      <strong>Total Fine Due: </strong> ₹{{ totalFine }}
+    </div>
+  </div>
+</div>

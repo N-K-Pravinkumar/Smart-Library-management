@@ -1,39 +1,89 @@
-<h2>Student Borrowing Dashboard</h2>
+<div class="container">
+  <h2>My Borrowing Report</h2>
 
-<form [formGroup]="filterForm" class="filter-container">
-  <input
-    type="text"
-    placeholder="Search by Username, Student ID, or Phone Number"
-    formControlName="searchTerm"
-  />
+  <form [formGroup]="filterForm" class="filter-container">
+    <div class="search-row">
+      <select formControlName="searchType" class="search-select">
+        <option value="bookId">Search by Book ID</option>
+        <option value="studentId">Search by Student ID</option>
+      </select>
 
-  <select formControlName="sortOrder">
-    <option value="desc">Descending</option>
-    <option value="asc">Ascending</option>
-  </select>
+      <input
+        type="text"
+        placeholder="Enter ID "
+        formControlName="searchTerm"
+        class="search-input"
+      />
+    </div>
 
-  <div class="filter-buttons">
-    <button type="button" (click)="setFilter('all')" [class.active]="filterForm.value.filterStatus === 'all'">All</button>
-    <button type="button" (click)="setFilter('borrowed')" [class.active]="filterForm.value.filterStatus === 'borrowed'">Borrowed</button>
-    <button type="button" (click)="setFilter('unborrowed')" [class.active]="filterForm.value.filterStatus === 'unborrowed'">Unborrowed</button>
+    <div class="filter-buttons">
+      <button
+        type="button"
+        (click)="setFilter('all')"
+        [class.active]="filterForm.value.filterStatus === 'all'"
+      >
+        All
+      </button>
+      <button
+        type="button"
+        (click)="setFilter('borrowed')"
+        [class.active]="filterForm.value.filterStatus === 'borrowed'"
+      >
+        Borrowed
+      </button>
+      <button
+        type="button"
+        (click)="setFilter('returned')"
+        [class.active]="filterForm.value.filterStatus === 'returned'"
+      >
+        Returned
+      </button>
+    </div>
+  </form>
+
+  <button class="download-btn" (click)="downloadPDF()"> Download as PDF</button>
+
+  <div id="reportTable" class="fade-in">
+    <table>
+      <thead>
+        <tr>
+          <th>Book ID</th>
+          <th>Book Name</th>
+          <th>Student ID</th>
+          <th>Borrow Date</th>
+          <th>Return Date</th>
+          <th>Status</th>
+          <th>Days Left / Overdue</th>
+          <th>Fine (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of filteredRecords">
+          <td>{{ record.bookId }}</td>
+          <td>{{ record.bookName }}</td>
+          <td>{{ record.studentId }}</td>
+          <td>{{ record.borrowDate | date: 'mediumDate' }}</td>
+          <td>
+            <span *ngIf="record.returnDate">{{ record.returnDate | date: 'mediumDate' }}</span>
+            <span *ngIf="!record.returnDate" class="text-muted">Not returned</span>
+          </td>
+          <td>
+            <span [ngClass]="record.returned ? 'returned' : 'borrowed'">
+              {{ record.returned ? 'Returned' : 'Borrowed' }}
+            </span>
+          </td>
+          <td>
+            <span [ngClass]="record.daysRemaining < 0 ? 'overdue' : 'due-soon'">
+              {{ record.daysRemaining < 0 ? (-record.daysRemaining + ' days overdue') : (record.daysRemaining + ' days left') }}
+            </span>
+          </td>
+          <td>{{ record.fine | number: '1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="total-fine">
+      <strong>Total Fine Due:</strong> ₹{{ totalFine }}
+    </div>
   </div>
-</form>
-
-<table>
-  <thead>
-    <tr>
-      <th>Student ID</th>
-      <th>Username</th>
-      <th>Phone Number</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let student of filteredStudents">
-      <td>{{ student.id }}</td>
-      <td>{{ student.username }}</td>
-      <td>{{ student.phone }}</td>
-      <td>{{ student.status }}</td>
-    </tr>
-  </tbody>
-</table>
+</div>

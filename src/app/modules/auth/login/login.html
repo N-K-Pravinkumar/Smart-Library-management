@@ -1,25 +1,54 @@
-<div class="form">
+<div class="login-container">
+  <div class="login-image">
+    <img src="assets/logo.png" alt="Library Logo" class="img" />
+  </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="login-form">
+    <div class="form-card">
+      <h2>Login</h2>
 
-  <label>Email</label>
-  <input type="email" formControlName="email" />
-  
-  @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-    <small style="color:red;">Please enter a valid email</small>
-  }
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <!-- Email -->
+        <div class="input-group">
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Enter email"
+          />
 
-  <label>Password</label>
-  <input type="password" formControlName="password" />
+          <div class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
+            <small *ngIf="email.errors?.['required']">Email is required.</small>
+            <small *ngIf="email.errors?.['email']">Enter a valid email address.</small>
+          </div>
+        </div>
 
-  @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-    <small style="color:red;">Password must be at least 6 characters</small>
-  }
+        <!-- Password -->
+        <div class="input-group">
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Enter password"
+          />
 
-  <button type="submit">Login</button>
+          <div class="error" *ngIf="password.invalid && (password.dirty || password.touched)">
+            <small *ngIf="password.errors?.['required']">Password is required.</small>
+            <small *ngIf="password.errors?.['minlength']">
+              Password must be at least 6 characters.
+            </small>
+          </div>
+        </div>
 
-</form>
-  <button class="reg" routerLink="/register"> Register</button>
+        <button type="submit" class="btnregister" [disabled]="loading || loginForm.invalid">
+          {{ loading ? 'Logging in...' : 'Login' }}
+        </button>
 
+        <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+      </form>
 
+      <div class="login-text">
+        Don't have an account?
+        <a (click)="goToRegister()">Register</a>
+      </div>
+    </div>
+  </div>
 </div>

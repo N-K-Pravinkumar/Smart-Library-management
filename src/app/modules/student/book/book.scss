@@ -10,52 +10,49 @@
   box-shadow: 1px 20px 20px rgba(0, 0, 0, 0.08);
 }
 
-.form-section {
-  margin-bottom: 30px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
 }
 
-.form-section h3 {
-  font-size: 1.3rem;
-  margin-bottom: 15px;
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
   color: #222;
 }
 
-form input {
-  display: block;
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 12px;
+.subtitle {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.filter-section {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-box,
+.status-select,
+.reset-button {
+  padding: 8px 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 0.95rem;
 }
 
-form button {
-  padding: 8px 16px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: background-color 0.3s ease;
-}
-
-form button:first-of-type {
+.reset-button {
   background-color: #007bff;
   color: #fff;
+  cursor: pointer;
+  transition: background 0.7s;
 }
 
-form button:first-of-type:hover {
+.reset-button:hover {
   background-color: #0056b3;
-}
-
-form button:last-of-type {
-  background-color: #6c757d;
-  color: #fff;
-}
-
-form button:last-of-type:hover {
-  background-color: #5a6268;
 }
 
 .book-list {
@@ -82,37 +79,50 @@ form button:last-of-type:hover {
   box-shadow: 1px 20px 25px rgba(0, 0, 0, 0.12);
 }
 
-.book-card p {
+.book-details p {
   margin: 5px 0;
   font-size: 0.95rem;
   color: #333;
 }
 
-.book-card button {
-  padding: 6px 12px;
+.status {
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.8rem;
+}
+
+.status.available {
+  background-color: #28a745;
+}
+
+.status.borrowed {
+  background-color: #dc3545;
+}
+
+.book-action {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.borrow-button {
+  background-color: #007bff;
+  color: white;
   border: none;
+  padding: 8px 16px;
   border-radius: 6px;
+  font-size: 0.9rem;
   cursor: pointer;
-  font-size: 0.85rem;
   transition: background-color 0.3s ease;
 }
 
-.book-card button:first-of-type {
-  background-color: #2a74ff;
-  color: #fff;
+.borrow-button:hover {
+  background-color: #0056b3;
 }
 
-.book-card button:first-of-type:hover {
-  background-color: #172ef8;
-}
-
-.book-card button:last-of-type {
-  background-color: #fd5364;
-  color: #fff;
-}
-
-.book-card button:last-of-type:hover {
-  background-color: #ff5263;
+.unavailable-text {
+  color: #777;
+  font-size: 0.9rem;
 }
 
 .no-results {

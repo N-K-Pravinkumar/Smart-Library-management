@@ -1,35 +1,39 @@
-<div class="dashboard">
-  <h2 class="title">Wecodee smart Library </h2>
+<div class="container">
+  <div class="dashboard">
 
-  <div class="cards">
-    <div class="card total-books">
-      <h3>Total Books</h3>
-      <p>{{ totalBooks }}</p>
+    <div class="cards">
+      <div class="card1 total-books">
+        <b><h1>{{ totalBooks }}</h1></b>
+        <h4>Total Books Available</h4>
+      </div>
+
+      <div class="card2 borrowed">
+        <b><h1>{{ totalBorrowed }}</h1></b>
+        <h4>Currently Borrowed</h4>
+      </div>
+
+      <div class="card3 returned">
+        <b><h1>{{ totalReturned }}</h1></b>
+        <h4>Number Books Returned</h4>
+      </div>
+
+      <div class="card4 not-returned">
+        <b><h1>{{ totalNotReturned }}</h1></b>
+        <h4>Not Yet Returned</h4>
+      </div>
+
+      <div class="card5 members">
+        <b><h1>{{ totalMembers }}</h1></b>
+        <h4>Users</h4>
+      </div>
+
+      <div class="card6 fine">
+        <b><h1>₹{{ totalFine }}</h1></b>
+        <h4>Total Fine Collected</h4>
+      </div>
     </div>
 
-    <div class="card borrowed">
-      <h3>Borrowed Books</h3>
-      <p>{{ totalBorrowed }}</p>
-    </div>
+   
 
-    <div class="card returned">
-      <h3>Returned Books</h3>
-      <p>{{ totalReturned }}</p>
-    </div>
-
-    <div class="card not-returned">
-      <h3>Not Returned</h3>
-      <p>{{ totalNotReturned }}</p>
-    </div>
-
-    <div class="card members">
-      <h3>Total Members</h3>
-      <p>{{ totalMembers }}</p>
-    </div>
-
-    <div class="card fine">
-      <h3>Total Fine Collected</h3>
-      <p>₹{{ totalFine }}</p>
-    </div>
   </div>
 </div>

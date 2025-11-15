@@ -1,65 +1,31 @@
 <div class="container">
-  <div class="card">
-    <div class="header">
-      <div>
-        <div class="title">Books Catalogue</div>
-        <div class="subtitle">
-          List of books with borrow status and student details.
-        </div>
-      </div>
+  <div class="catalogue">
 
-      <form [formGroup]="filterForm" class="controls">
-        <input
-          formControlName="searchText"
-          placeholder="Search by id, title or author"
-          class="search"
-        />
-        <select formControlName="statusFilter" class="filter-btn">
-          <option value="all">All</option>
-          <option value="borrowed">Borrowed</option>
-          <option value="available">Available</option>
-        </select>
-        <button type="button" (click)="resetFilters()" class="filter-btn">
-          Reset
-        </button>
+    <div class="form-section">
+      <h3>{{ editMode ? 'Edit Book' : 'Add New Book' }}</h3>
+      <form [formGroup]="bookForm">
+        <input formControlName="bookName" placeholder="Book Name" />
+        <input formControlName="author" placeholder="Author" />
+        <input formControlName="category" placeholder="Category" />
+        <button type="button" (click)="addOrUpdateBook()">{{ editMode ? 'Update' : 'Add' }}</button>
+        <button type="button" *ngIf="editMode" (click)="bookForm.reset(); editMode=false;">Cancel</button>
       </form>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Book ID</th>
-          <th>Book Name</th>
-          <th>Author</th>
-          <th>Status</th>
-          <th>Student ID</th> <!-- ✅ New column -->
-        </tr>
-      </thead>
-      <tbody>
-        @for (book of filteredBooks; track book.bookId) {
-          <tr [ngClass]="book.isBorrowed ? 'row-borrowed' : 'row-available'">
-            <td>{{ book.bookId }}</td>
-            <td>{{ book.bookname }}</td>
-            <td>{{ book.author }}</td>
-            <td>
-              <span class="badge" [ngClass]="book.isBorrowed ? 'borrowed' : 'available'">
-                {{ book.isBorrowed ? 'Borrowed' : 'Available' }}
-              </span>
-            </td>
-            <td>
-              @if (book.isBorrowed) {
-                <span>{{ book.studentId }}</span>
-              } @else {
-                <span class="text-muted">—</span>
-              }
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
+    <div class="book-list">
+      <div *ngFor="let book of filteredBooks; trackBy: trackByBookId" class="book-card">
+        <p><strong>Book ID:</strong> {{ book.bookId }}</p>
+        <p><strong>Name:</strong> {{ book.bookName }}</p>
+        <p><strong>Author:</strong> {{ book.author }}</p>
+        <p><strong>Category:</strong> {{ book.category }}</p>
+        <p><strong>Status:</strong> {{ book.borrowed ? 'Borrowed' : 'Available' }}</p>
+        <button (click)="editBook(book)">Edit</button>
+        <button (click)="deleteBook(book.bookId!)">Delete</button>
+      </div>
 
-    @if (filteredBooks.length === 0) {
-      <div class="no-results">No books match your search / filter.</div>
-    }
+      <div *ngIf="filteredBooks.length === 0" class="no-results">
+        No books match your search/filter.
+      </div>
+    </div>
   </div>
 </div>

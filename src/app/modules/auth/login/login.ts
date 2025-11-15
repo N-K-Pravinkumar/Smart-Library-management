@@ -1,30 +1,85 @@
-import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { RouterLink } from "@angular/router";
+import { AuthService } from '../../../services/auth';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
-  styleUrls: ['./login.scss']
+  styleUrls: ['./login.scss'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
 })
-export class Login{
+export class Login {
+  loginForm!: FormGroup;
+  loading = false;
+  errorMessage = '';
 
-  // Create form group
-  loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email,    Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')
-]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)])
-  });
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {}
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      console.log('Form Data:', this.loginForm.value);
-      alert('Login Successful!');
-    } else {
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
+
+  // getters for template
+  get email() {
+    return this.loginForm.get('email')!;
+  }
+  get password() {
+    return this.loginForm.get('password')!;
+  }
+
+  login() {
+    this.errorMessage = '';
+
+    if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
+      return;
     }
+
+    this.loading = true;
+
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login({ email, password }).subscribe({
+      next: (res) => {
+        this.loading = false;
+
+        localStorage.setItem('token', res.token || '');
+        localStorage.setItem('username', res.username || '');
+
+        const role = res.role?.toLowerCase() || '';
+        localStorage.setItem('role', role);
+
+        if (role === 'student' && res.id != null) {
+          localStorage.setItem('userId', res.id.toString());
+          this.router.navigateByUrl('/student/home');
+        } else if (role === 'librarian') {
+          this.router.navigateByUrl('/librarian/home');
+        } else {
+          alert('Unknown user role received from server');
+        }
+      },
+
+      error: (err) => {
+        this.loading = false;
+        this.errorMessage =
+          err?.status === 401
+            ? 'Invalid email or password'
+            : 'Server error. Please try again later.';
+      },
+    });
+  }
+
+  goToRegister() {
+    this.router.navigateByUrl('/register');
   }
 }

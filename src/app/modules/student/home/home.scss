@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.dashboard {
+  text-align: center;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  width: 220px;
+  padding: 20px;
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.count {
+  color: #333;
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+.total-books { border-top: 5px solid #007bff; }
+.borrowed { border-top: 5px solid #28a745; }
+.to-return { border-top: 5px solid #ffc107; }
+.fine { border-top: 5px solid #dc3545; }
+
+.top {
+  margin-top: 30px;
+  font-style: italic;
+  color: #444;
+}

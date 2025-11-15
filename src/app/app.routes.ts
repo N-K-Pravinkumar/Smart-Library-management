@@ -2,9 +2,12 @@ import { Routes } from '@angular/router';
 import { Login } from './modules/auth/login/login';
 import { Register } from './modules/auth/register/register';
 import { Layout } from './shared/layout/layout';
+import { Router } from '@angular/router';
 
-
-
+import { Book  as StudentBook} from './modules/student/book/book';
+import { Home as StudentHome } from './modules/student/home/home';
+import { Booktransaction as StudentTransaction } from './modules/student/booktransaction/booktransaction';
+import { Reports as StudentReports} from './modules/student/reports/reports';
 
 import { Book  as librarianBook} from './modules/admin/book/book';
 import { Home as librarianHome } from './modules/admin/home/home';
@@ -27,17 +30,17 @@ export const routes: Routes = [
     ],
   },
 
-//   {
-//     path: 'student',
-//     component: Layout,
-//     children: [
-//       { path: 'home', component: StudentHome },
-//       { path: 'book', component: StudentBook },
-//       { path: 'transaction', component: StudentTransaction },
-//       { path: 'reports', component: StudentReports },
-//       { path: '', redirectTo: 'home', pathMatch: 'full' },
-//     ],
-//   },
+  {
+    path: 'student',
+    component: Layout,
+    children: [
+      { path: 'home', component: StudentHome },
+      { path: 'book', component: StudentBook },
+      { path: 'transaction', component: StudentTransaction },
+      { path: 'reports', component: StudentReports },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+    ],
+  },
 
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, 
 ];

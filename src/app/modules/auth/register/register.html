@@ -1,37 +1,75 @@
+<div class="register-container">
+  <div class="register-image">
+    <img src="assets/logo.png" alt="Library Logo" />
+  </div>
 
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <label>Name</label>
-  <input type="text" formControlName="firstName" />
-  @if (registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched) {
-    <div style="color: red;">First name is required and must contain only letters.</div>
-  }
+  <div class="register-form">
+    <form [formGroup]="registerForm" class="form-card" (ngSubmit)="register()">
 
-  <label>User Name</label>
-  <input type="text" formControlName="userName" />
-  @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
-    <div style="color: red;">Username is required (letters, numbers, or @ only).</div>
-  }
+      <h2>Create an Account</h2>
 
-  <label>Email</label>
-  <input type="email" formControlName="email" />
-  @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-    <div style="color: red;">Please enter a valid email address.</div>
-  }
+      <!-- Username -->
+      <div class="input-group">
+        <input 
+          type="text"
+          formControlName="username"
+          placeholder="Enter username"
+        />
+        <small class="error" *ngIf="username.invalid && (username.touched || username.dirty)">
+          Username is required.
+        </small>
+      </div>
 
-  <label>Phone Number</label>
-  <input type="number" formControlName="phNumber" />
-  @if (registerForm.get('phNumber')?.invalid && registerForm.get('phNumber')?.touched) {
-    <div style="color: red;">Phone number must be 10 digits.</div>
-  }
+      <!-- Email -->
+      <div class="input-group">
+        <input 
+          type="email"
+          formControlName="email"
+          placeholder="Enter email"
+        />
+        <small class="error" *ngIf="email.invalid && (email.touched || email.dirty)">
+          Enter a valid email.
+        </small>
+      </div>
 
-  <label>Password</label>
-  <input type="password" formControlName="password">
+      <!-- Password -->
+      <div class="input-group">
+        <input 
+          type="password"
+          formControlName="password"
+          placeholder="Enter password"
+        />
+        <small class="error" *ngIf="password.invalid && (password.touched || password.dirty)">
+          Password must be at least 5 characters.
+        </small>
+      </div>
 
-  <label>Confirm Password</label>
-  <input type="password" formControlName="confirmpassword">
-  @if (registerForm.get('confirmpassword')?.touched && !passwordsMatch()) {
-    <div style="color: red;">Passwords do not match.</div>
-  }
+      <!-- Role -->
+      <div class="input-group">
+        <select formControlName="role">
+          <option value="" disabled>Select Role</option>
+          <option value="Student">Student</option>
+          <option value="Librarian">Librarian</option>
+        </select>
+        <small class="error" *ngIf="role.invalid && (role.touched || role.dirty)">
+          Please select a role.
+        </small>
+      </div>
 
-  <button type="submit" [disabled]="isFormInValid()">Submit</button>
-</form>
+      <button 
+        class="btnregister" 
+        type="submit"
+        [disabled]="loading || registerForm.invalid"
+      >
+        {{ loading ? 'Registering...' : 'Sign Up' }}
+      </button>
+
+      <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+      <p class="login-text">
+        Already have an account? <a routerLink="/login">Login In</a>
+      </p>
+
+    </form>
+  </div>
+</div>

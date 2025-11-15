@@ -5,17 +5,17 @@ import { BorrowingReportService } from '../../../services/borrowing-report-servi
 
 @Component({
   selector: 'app-report',
-  imports: [CommonModule,ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './reports.html',
   styleUrls: ['./reports.scss']
 })
-
-
 export class Reports implements OnInit {
   filterForm!: FormGroup;
   records: any[] = [];
   filteredRecords: any[] = [];
   totalFine: number = 0;
+  studentId!: number;
 
   constructor(
     private fb: FormBuilder,
@@ -23,6 +23,13 @@ export class Reports implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const storedId = localStorage.getItem('userId');
+    if (!storedId) {
+      alert('No student logged in. Please login first.');
+      return;
+    }
+    this.studentId = parseInt(storedId, 10);
+
     this.filterForm = this.fb.group({
       searchType: ['bookId'],
       searchTerm: [''],
@@ -30,20 +37,17 @@ export class Reports implements OnInit {
     });
 
     this.loadRecords();
-    const storedRole = localStorage.getItem('role');
-    
-
     this.filterForm.valueChanges.subscribe(() => this.applyFilters());
   }
 
   loadRecords() {
     this.reportService.getBorrowingRecords().subscribe({
       next: (data: any[]) => {
-        this.records = data;
-        this.filteredRecords = [...data];
+        // Filter only the logged-in student's records
+        this.records = data.filter(r => r.studentId === this.studentId);
+        this.filteredRecords = [...this.records];
         this.calculateTotalFine();
-                console.log(' Received transaction data:', data);
-
+        console.log(' Received transaction data:', this.records);
       },
       error: (err: any) => console.error('Error fetching records:', err)
     });
@@ -54,37 +58,39 @@ export class Reports implements OnInit {
   }
 
   applyFilters() {
-  const { searchType, searchTerm, filterStatus } = this.filterForm.value;
-  const term = (searchTerm || '').toLowerCase();
+    const { searchType, searchTerm, filterStatus } = this.filterForm.value;
+    const term = (searchTerm || '').toLowerCase();
 
-  this.filteredRecords = this.records.filter(record => {
-    let matchesSearch = true;
-    if (term) {
-      if (searchType === 'bookId') {
-        matchesSearch = record.bookId?.toString().includes(term) 
-                      || record.bookName?.toLowerCase().includes(term);
-      } else if (searchType === 'studentId') {
-        matchesSearch = record.studentId?.toString().includes(term) 
-                       //|| record.studentName?.toLowerCase().includes(term);
+    this.filteredRecords = this.records.filter(record => {
+      //  Search filter
+      let matchesSearch = true;
+      if (term) {
+        if (searchType === 'bookId') {
+          matchesSearch =
+            record.bookId?.toString().toLowerCase().includes(term) ||
+            record.bookName?.toLowerCase().includes(term);
+        } else if (searchType === 'studentId') {
+          matchesSearch =
+            record.studentId?.toString().toLowerCase().includes(term) ||
+            record.studentName?.toLowerCase().includes(term);
+        }
       }
-    }
 
-    let matchesStatus = true;
-    if (filterStatus === 'borrowed') {
-      matchesStatus = !record.returned;
-    } else if (filterStatus === 'returned') {
-      matchesStatus = record.returned;
-    }
+      let matchesStatus = true;
+      if (filterStatus === 'borrowed') {
+        matchesStatus = !record.returned;
+      } else if (filterStatus === 'returned') {
+        matchesStatus = record.returned;
+      }
 
-    return matchesSearch && matchesStatus;
-  });
+      return matchesSearch && matchesStatus;
+    });
 
-  this.calculateTotalFine();
-}
-
+    this.calculateTotalFine();
+  }
 
   calculateTotalFine() {
-    this.totalFine = this.filteredRecords.reduce((sum, r) => sum + r.fine, 0);
+    this.totalFine = this.filteredRecords.reduce((sum, r) => sum + (r.fine || 0), 0);
   }
 
   downloadPDF() {
