@@ -39,7 +39,7 @@ export class Reports implements OnInit {
   loadRecords() {
     this.reportService.getBorrowingRecords().subscribe({
       next: (data: any[]) => {
-        this.records = data;
+        this.records = data.reverse();
         this.filteredRecords = [...data];
         this.calculateTotalFine();
                 console.log(' Received transaction data:', data);
@@ -50,7 +50,7 @@ export class Reports implements OnInit {
   }
 
   setFilter(status: string) {
-    this.filterForm.setValue({ filterStatus: status });
+    this.filterForm.patchValue({ filterStatus: status });
   }
 
   applyFilters() {

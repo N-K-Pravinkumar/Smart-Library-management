@@ -1,42 +1,52 @@
 <div class="container">
-  <div class="catalogue">
-    <button type="button" class='add-btn' (click)="add=true">add +</button>
-    @if(add || editMode){
-      <div class="form-section">
-        @if (editMode ){
-          <h3>Edit Book</h3>
-        }
-        @if(add && editMode==false){
-          <h3>Add New Book</h3>
+  <button type="button" class="add-btn" (click)="openForm()">Add +</button>
 
-        }
-        <form [formGroup]="bookForm">
-          <input formControlName="bookName" placeholder="Book Name" />
-          <input formControlName="author" placeholder="Author" />
-          <input formControlName="category" placeholder="Category" />
-          <button type="button" (click)="addOrUpdateBook()">{{ editMode ? 'Update' : 'Add' }}</button>
-          <button type="button" (click)="bookForm.reset();add=false;editMode=false">Cancel</button>   
-        </form>
+  <div class="modal-overlay" *ngIf="add || editMode" (click)="closeForm()"></div>
+
+  <div class="modal-box" *ngIf="add || editMode">
+    <form [formGroup]="bookForm" class="modal-content" (click)="$event.stopPropagation()">
+      <h3>{{ editMode ? 'Edit Book' : 'Add New Book' }}</h3>
+
+      <input formControlName="bookName" placeholder="Book Name" />
+      <input formControlName="author" placeholder="Author" />
+      <input formControlName="category" placeholder="Category" />
+
+      <div class="modal-actions">
+        <button type="button" class="btn primary" (click)="addOrUpdateBook()">
+          {{ editMode ? 'Update' : 'Add' }}
+        </button>
+        <button type="button" class="btn cancel" (click)="closeForm()">Cancel</button>
       </div>
-    }   
+    </form>
+  </div>
 
-    <div class="book-list">
-      @for (book of filteredBooks; track book.bookId) {
-      <div  class="book-card">
-        <p><strong>Book id:</strong> {{ book.bookId }}</p>
-        <p><strong>Name:</strong> {{ book.bookName }}</p>
-        <p><strong>Author:</strong> {{ book.author }}</p>
-        <p><strong>Category:</strong> {{ book.category }}</p>
-        <p><strong>Status:</strong> {{ book.borrowed ? 'Borrowed' : 'Available' }}</p>
-        <button (click)="editBook(book)">Edit</button>
-        <button (click)="deleteBook(book.bookId!)">Delete</button>
+  <form [formGroup]="filterForm" class="filter-form">
+    <input type="text" placeholder="Search books..." formControlName="searchText" />
+    <select formControlName="statusFilter">
+      <option value="all">All</option>
+      <option value="borrowed">Borrowed</option>
+      <option value="available">Available</option>
+    </select>
+    <button type="button" (click)="resetFilters()">Reset</button>
+  </form>
+
+  <div class="book-list">
+    @for (book of filteredBooks; track book.bookId) {
+    <div class="book-card">
+      <p><strong>Book ID:</strong> {{ book.bookId }}</p>
+      <p><strong>Name:</strong> {{ book.bookName }}</p>
+      <p><strong>Author:</strong> {{ book.author }}</p>
+      <p><strong>Category:</strong> {{ book.category }}</p>
+      <p><strong>Status:</strong> {{ book.borrowed ? 'Borrowed' : 'Available' }}</p>
+
+      <button (click)="editBook(book)">Edit</button>
+      <button (click)="deleteBook(book.bookId!)">Delete</button>
+    </div>
+  }
+    @if(filteredBooks.length===0){
+      <div class="no-results">
+        No books match your search/filter.
       </div>
     }
-      @if(filteredBooks.length==0){
-        <div class="no-results">
-          No books match your search/filter.
-        </div>
-      }
-    </div>
   </div>
 </div>

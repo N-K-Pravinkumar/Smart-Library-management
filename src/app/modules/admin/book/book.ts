@@ -99,6 +99,7 @@ export class Book implements OnInit {
         .subscribe({
           next: () => {
             alert('Book added successfully!');
+            this.add=false;
             this.bookForm.reset();
             this.loadBooks();
           },
@@ -106,6 +107,17 @@ export class Book implements OnInit {
         });
     }
   }
+
+ openForm() {
+  this.add = true;
+  this.editMode = false;
+}
+
+closeForm() {
+  this.add = false;
+  this.editMode = false;
+  this.bookForm.reset();
+}
 
   editBook(book: BookModel): void {
     this.editMode = true;

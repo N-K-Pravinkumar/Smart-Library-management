@@ -1,7 +1,8 @@
-import { Component, OnInit, TrackByFunction } from '@angular/core';
+import { Component, OnInit, TrackByFunction, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 interface BookModel {
   bookId: number;
@@ -13,7 +14,7 @@ interface BookModel {
 @Component({
   selector: 'book',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule],
   templateUrl: './book.html',
   styleUrls: ['./book.scss']
 })
@@ -23,19 +24,21 @@ export class Book implements OnInit {
   filterForm: FormGroup;
   studentId!: number;
 
+  private snackBar = inject(MatSnackBar);
+
   trackByBookId: TrackByFunction<BookModel> = (index, book) => book.bookId;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.filterForm = this.fb.group({
       searchText: [''],
-      statusFilter: ['all']
+      statusFilter: ['available']
     });
   }
 
   ngOnInit(): void {
     const storedId = localStorage.getItem('userId');
     if (!storedId) {
-      alert('No student logged in!');
+      this.showToast('No student logged in!', 'error');
       return;
     }
     this.studentId = parseInt(storedId, 10);
@@ -50,7 +53,7 @@ export class Book implements OnInit {
         this.books = data.map(b => ({ ...b, borrowed: !!b.borrowed }));
         this.filteredBooks = [...this.books];
       },
-      error: err => console.error('Error loading books:', err)
+      error: err => this.showToast('Error loading books', 'error')
     });
   }
 
@@ -72,13 +75,13 @@ export class Book implements OnInit {
   }
 
   resetFilters(): void {
-    this.filterForm.setValue({ searchText: '', statusFilter: 'all' });
+    this.filterForm.setValue({ searchText: '', statusFilter: 'available' });
     this.filteredBooks = [...this.books];
   }
 
   borrowBook(book: BookModel): void {
     if (!this.studentId) {
-      alert('No student logged in!');
+      this.showToast('No student logged in!', 'error');
       return;
     }
 
@@ -89,12 +92,21 @@ export class Book implements OnInit {
       }
     }).subscribe({
       next: (res: any) => {
-        alert(res.message);
+        this.showToast(res.message, 'success');
         book.borrowed = true;
       },
       error: (err: any) => {
-        alert(err.error?.message || 'Error borrowing book');
+        this.showToast(err.error?.message || 'Error borrowing book', 'error');
       }
+    });
+  }
+
+  showToast(message: string, type: 'success' | 'error' | 'info' = 'info') {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: [`toast-${type}`] // apply custom styling
     });
   }
 }

@@ -24,15 +24,28 @@
       <tr>
       <td>{{ record.book.bookName }}</td>
       <td>{{ record.borrowDate }}</td>
-      <td>{{ record.overDueDays }}</td>
-      <td>{{ record.fine }}</td>
+      @if(record.overDueDays>0){
+        <td>{{ record.overDueDays }}</td>
+      }
+      @else{
+        <td>--</td>
+      }
+      @if(record.fine>0){
+        <td>{{record.fine}}</td>
+      }@else{
+        <td>--</td>
+      }
       <td>{{ record.pay ? 'Yes' : 'No' }}</td>
       <td>
         @if(!record.returned){
           <button (click)="handleReturn(record)">Return</button>
+        }
+        @else {
+          <span>returned</span>
         }
       </td>
       </tr>
     }
   </tbody>
 </table>
+

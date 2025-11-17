@@ -36,6 +36,7 @@
           <th>Book ID</th>
           <th>Book Name</th>
           <th>Student ID</th>
+          <th>Student Name</th>
           <th>Borrow Date</th>
           <th>Return Date</th>
           <th>Status</th>
@@ -49,6 +50,7 @@
           <td>{{ record.bookId }}</td>
           <td>{{ record.bookName }}</td>
           <td>{{ record.studentId }}</td>
+          <td>{{record.studentName}}</td>
           <td>{{ record.borrowDate | date: 'mediumDate' }}</td>
           <td>
             @if(record.returnDate){
@@ -64,9 +66,14 @@
             </span>
           </td>
           <td>
-            <span [ngClass]="record.daysRemaining < 0 ? 'overdue' : 'due-soon'">
-              {{ record.daysRemaining < 0 ? (-record.daysRemaining + ' days overdue') : (record.daysRemaining + ' days left') }}
-            </span>
+            @if(record.daysRemaining>0){
+              <span [ngClass]="record.daysRemaining < 0 ? 'overdue' : 'due-soon'">
+                {{ record.daysRemaining < 0 ? (-record.daysRemaining + ' days overdue') : (record.daysRemaining + ' days left') }}
+              </span>
+            }
+            @else {
+              <span>--</span>
+            }
           </td>
           @if(record.fine <= 0){
             <td>--</td>

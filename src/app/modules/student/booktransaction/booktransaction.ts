@@ -37,7 +37,7 @@ export class Booktransaction implements OnInit {
       this.records = data.map(record => ({
         ...record,
         returned: record.returnDate !== null
-      }));
+      })).reverse();
       this.filteredRecords = [...this.records];
     },
     error: (err) => console.error('Error loading transactions', err)
@@ -94,12 +94,15 @@ handleReturn(record: BorrowRecord) {
   }
 }
 
-returnBook(record: BorrowRecord) {
+private returnBook(record: BorrowRecord) {
   if (confirm(`Return the book "${record.book.bookName}"?`)) {
     this.borrowService.returnBook(record.borrowId).subscribe({
       next: () => {
-        this.filteredRecords = this.filteredRecords.filter(r => r.borrowId !== record.borrowId);
-        this.records = this.records.filter(r => r.borrowId !== record.borrowId)  .sort((a, b) => b.borrowId - a.borrowId);;
+        record.returned = true;
+        record.returnDate = new Date().toISOString();
+        record.pay = true;  
+        this.records = [...this.records];
+        this.filteredRecords = [...this.filteredRecords];
 
         alert('Book returned successfully!');
       },
@@ -110,6 +113,7 @@ returnBook(record: BorrowRecord) {
     });
   }
 }
+
 
 
 
