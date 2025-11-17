@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { Login } from './modules/auth/login/login';
 import { Register } from './modules/auth/register/register';
 import { Layout } from './shared/layout/layout';
-import { Router } from '@angular/router';
 
 import { Book  as StudentBook} from './modules/student/book/book';
 import { Home as StudentHome } from './modules/student/home/home';

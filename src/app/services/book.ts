@@ -52,15 +52,15 @@ export class BookService {
   getBorrowedCount(studentId: number): Observable<number> {
     return this.http.get<number>(`${this.baseUrl}/borrowed/count/${studentId}`);
   }
-  addBook(book: Partial<BookModel>): Observable<BookModel> {
-    return this.http.post<BookModel>(this.librarianBaseUrl, book);
-  }
+  // addBook(book: Partial<BookModel>): Observable<BookModel> {
+  //   return this.http.post<BookModel>(this.librarianBaseUrl, book);
+  // }
 
   
 
-  updateBook(bookId: number, book: Partial<BookModel>): Observable<BookModel> {
-    return this.http.put<BookModel>(`${this.librarianBaseUrl}/${bookId}`, book);
-  }
+  // updateBook(bookId: number, book: Partial<BookModel>): Observable<BookModel> {
+  //   return this.http.put<BookModel>(`${this.librarianBaseUrl}/${bookId}`, book);
+  // }
 
   
   refreshDashboard() {

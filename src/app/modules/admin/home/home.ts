@@ -11,12 +11,14 @@ import { DashboardSummary } from '../../../services/dashboard-service';
   styleUrls: ['./home.scss']
 })
 export class Home implements OnInit {
-  totalBooks = 0;
-  totalMembers = 0;
-  totalBorrowed = 0;
-  totalReturned = 0;
-  totalNotReturned = 0;
-  totalFine = 0;
+  homeSummary={
+  totalBooks : 0,
+  totalMembers : 0,
+  totalBorrowed : 0,
+  totalReturned : 0,
+  totalNotReturned : 0,
+  totalFine : 0
+  };
  
   constructor(private http: HttpClient) {}
  
@@ -28,12 +30,14 @@ export class Home implements OnInit {
     this.http.get<DashboardSummary>('http://localhost:8080/api/librarian/home')
       .subscribe({
         next: (data) => {
-          this.totalBooks = data.totalBooks;
-          this.totalMembers = data.totalMembers;
-          this.totalBorrowed = data.totalBorrowed;
-          this.totalReturned = data.totalReturned;
-          this.totalNotReturned = data.totalNotReturned;
-          this.totalFine = data.totalFine;
+          this.homeSummary={
+          totalBooks : data.totalBooks,
+          totalMembers : data.totalMembers,
+          totalBorrowed : data.totalBorrowed,
+          totalReturned : data.totalReturned,
+          totalNotReturned : data.totalNotReturned,
+          totalFine : data.totalFine
+          };
         },
         error: (err) => console.error('Error fetching dashboard summary:', err)
       });

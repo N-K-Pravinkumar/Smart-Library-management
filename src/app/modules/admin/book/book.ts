@@ -23,6 +23,7 @@ export class Book implements OnInit {
   filteredBooks: BookModel[] = [];
   filterForm: FormGroup;
   bookForm: FormGroup;
+  add: boolean=false;
   editMode: boolean = false;
   selectedBookId?: number;
 
@@ -81,8 +82,8 @@ export class Book implements OnInit {
   addOrUpdateBook(): void {
     const bookData = this.bookForm.value;
 
-    if (this.editMode && this.selectedBookId) {
-      this.http.put(`http://localhost:8080/api/librarian/book/${this.selectedBookId}`, bookData)
+    if (this.editMode && this.selectedBookId!) {
+      this.http.patch(`http://localhost:8080/api/librarian/book/${this.selectedBookId}`, bookData)
         .subscribe({
           next: () => {
             alert('Book updated successfully!');
@@ -109,7 +110,7 @@ export class Book implements OnInit {
   editBook(book: BookModel): void {
     this.editMode = true;
     this.selectedBookId = book.bookId;
-    this.bookForm.patchValue({
+    this.bookForm.setValue({
       bookName: book.bookName,
       author: book.author,
       category: book.category

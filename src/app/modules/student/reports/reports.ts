@@ -54,7 +54,7 @@ export class Reports implements OnInit {
   }
 
   setFilter(status: string) {
-    this.filterForm.patchValue({ filterStatus: status });
+    this.filterForm.setValue({ filterStatus: status });
   }
 
   applyFilters() {

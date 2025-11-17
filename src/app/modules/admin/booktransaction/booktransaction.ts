@@ -1,16 +1,15 @@
 import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
+// import { HttpClientModule } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { BorrowRecord, LibrarianService } from "../../../services/librarian-service";
 import { TransactionRecord, TransactionService } from "../../../services/transaction-service";
 
 @Component({
-  selector: 'app-book-transaction',
+  selector: 'app-booktransaction',
   templateUrl: './booktransaction.html',
   styleUrls: ['./booktransaction.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule],// HttpClientModule],
 })
 
 export class Booktransaction implements OnInit {

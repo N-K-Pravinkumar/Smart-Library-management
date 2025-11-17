@@ -1,20 +1,29 @@
 <div class="container">
   <div class="catalogue">
+    <button type="button" class='add-btn' (click)="add=true">add +</button>
+    @if(add || editMode){
+      <div class="form-section">
+        @if (editMode ){
+          <h3>Edit Book</h3>
+        }
+        @if(add && editMode==false){
+          <h3>Add New Book</h3>
 
-    <div class="form-section">
-      <h3>{{ editMode ? 'Edit Book' : 'Add New Book' }}</h3>
-      <form [formGroup]="bookForm">
-        <input formControlName="bookName" placeholder="Book Name" />
-        <input formControlName="author" placeholder="Author" />
-        <input formControlName="category" placeholder="Category" />
-        <button type="button" (click)="addOrUpdateBook()">{{ editMode ? 'Update' : 'Add' }}</button>
-        <button type="button" *ngIf="editMode" (click)="bookForm.reset(); editMode=false;">Cancel</button>
-      </form>
-    </div>
+        }
+        <form [formGroup]="bookForm">
+          <input formControlName="bookName" placeholder="Book Name" />
+          <input formControlName="author" placeholder="Author" />
+          <input formControlName="category" placeholder="Category" />
+          <button type="button" (click)="addOrUpdateBook()">{{ editMode ? 'Update' : 'Add' }}</button>
+          <button type="button" (click)="bookForm.reset();add=false;editMode=false">Cancel</button>   
+        </form>
+      </div>
+    }   
 
     <div class="book-list">
-      <div *ngFor="let book of filteredBooks; trackBy: trackByBookId" class="book-card">
-        <p><strong>Book ID:</strong> {{ book.bookId }}</p>
+      @for (book of filteredBooks; track book.bookId) {
+      <div  class="book-card">
+        <p><strong>Book id:</strong> {{ book.bookId }}</p>
         <p><strong>Name:</strong> {{ book.bookName }}</p>
         <p><strong>Author:</strong> {{ book.author }}</p>
         <p><strong>Category:</strong> {{ book.category }}</p>
@@ -22,10 +31,12 @@
         <button (click)="editBook(book)">Edit</button>
         <button (click)="deleteBook(book.bookId!)">Delete</button>
       </div>
-
-      <div *ngIf="filteredBooks.length === 0" class="no-results">
-        No books match your search/filter.
-      </div>
+    }
+      @if(filteredBooks.length==0){
+        <div class="no-results">
+          No books match your search/filter.
+        </div>
+      }
     </div>
   </div>
 </div>

@@ -50,7 +50,7 @@ export class Reports implements OnInit {
   }
 
   setFilter(status: string) {
-    this.filterForm.patchValue({ filterStatus: status });
+    this.filterForm.setValue({ filterStatus: status });
   }
 
   applyFilters() {
@@ -62,7 +62,7 @@ export class Reports implements OnInit {
     if (term) {
       if (searchType === 'bookId') {
         matchesSearch = record.bookId?.toString().includes(term) 
-                      || record.bookName?.toLowerCase().includes(term);
+                     // || record.bookName?.toLowerCase().includes(term);
       } else if (searchType === 'studentId') {
         matchesSearch = record.studentId?.toString().includes(term) 
                        //|| record.studentName?.toLowerCase().includes(term);

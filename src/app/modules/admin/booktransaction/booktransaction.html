@@ -24,23 +24,22 @@
       <th>Overdue Days</th>
       <th>Fine</th>
       <th>Paid</th>
-      <!-- <th>Action</th> -->
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let record of filteredRecords">
+    @for(record of filteredRecords; track record.bookId){
+      <tr>
       <td>{{ record.bookId }}</td>
       <td>{{ record.bookName }}</td>
       <td>{{ record.userId }}</td>
       <td>{{ record.userName }}</td>
       <td>{{ record.borrowDate }}</td>
-      <td>{{ record.returnDate || 'N/A' }}</td>
-      <td>{{ record.overDueDays }}</td>
-      <td>{{ record.fine }}</td>
+      <td>{{ record.returnDate || '-' }}</td>
+      <td>{{ record.overDueDays|| '-' }}</td>
+
+      <td>{{ record.fine || '-' }}</td>
       <td>{{ record.paid ? 'Yes' : 'No' }}</td>
-      <!-- <td>
-        <button *ngIf="!record.paid" (click)="markAsPaid(record)">Mark as Paid</button>
-      </td> -->
     </tr>
+  }
   </tbody>
 </table>

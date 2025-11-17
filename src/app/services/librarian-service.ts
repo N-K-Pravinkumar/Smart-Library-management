@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface BorrowRecord {
+  book: any;
   borrowId: number;
   bookId: number;
   bookName: string;
