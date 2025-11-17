@@ -32,8 +32,12 @@
           <td>{{ record.bookName }}</td>
           <td>{{ record.borrowDate | date:'mediumDate' }}</td>
           <td>
-            <span *ngIf="record.returnDate">{{ record.returnDate | date:'mediumDate' }}</span>
-            <span *ngIf="!record.returnDate" class="text-muted">Not returned</span>
+            @if(record.returnDate){
+              <span>{{ record.returnDate | date:'mediumDate' }}</span>
+            }
+            @else {
+              <span  class="text-muted">Not returned</span>
+            }
           </td>
           <td>
             <span [ngClass]="record.returned ? 'returned' : 'borrowed'">

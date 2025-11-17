@@ -4,27 +4,27 @@
     <div class="cards">
 
       <div class="card total-books">
-        <b><h1 class="count">{{ totalBooks }}</h1></b>
+        <b><h1 class="count">{{ homeSummary.totalBooks }}</h1></b>
         <h4>Total Books in Library</h4>
       </div>
 
       <div class="card borrowed">
-        <b><h1 class="count">{{ totalBorrowed }}</h1></b>
+        <b><h1 class="count">{{ homeSummary.totalBorrowed }}</h1></b>
         <h4>Borrowed (All Time)</h4>
       </div>
 
       <div class="card to-return">
-        <b><h1 class="count">{{ booksToReturn }}</h1></b>
+        <b><h1 class="count">{{ homeSummary.booksToReturn }}</h1></b>
         <h4>Books To Return</h4>
       </div>
 
       <div class="card fine">
-        <b><h1 class="count">₹{{ totalFine }}</h1></b>
+        <b><h1 class="count">₹{{ homeSummary.totalFine }}</h1></b>
         <h4>Total Fine</h4>
       </div>
 
     </div>
 
-    <h3 class="top">Keep reading & stay responsible 📚</h3>
+    <h3 class="top">Keep reading & stay responsible </h3>
   </div>
 </div>
