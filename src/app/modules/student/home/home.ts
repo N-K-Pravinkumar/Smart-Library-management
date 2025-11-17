@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { DashboardService, StudentHomeSummary } from '../../../services/dashboard-service';
+import { DashboardService} from '../../../services/dashboard-service';
 
 @Component({
   selector: 'app-home',
@@ -11,10 +11,12 @@ import { DashboardService, StudentHomeSummary } from '../../../services/dashboar
   styleUrls: ['./home.scss']
 })
 export class Home implements OnInit {
-  totalBooks = 0;
-  totalBorrowed = 0;
-  booksToReturn = 0;
-  totalFine = 0;
+  homeSummary={
+  totalBooks : 0,
+  totalBorrowed : 0,
+  booksToReturn : 0,
+  totalFine : 0
+  };
 
   constructor(private dashboardService: DashboardService) {}
 
@@ -27,10 +29,12 @@ export class Home implements OnInit {
 
     this.dashboardService.getStudentSummary(studentId).subscribe({
       next: (summary) => {
-      this.totalBooks = summary.totalBooks;
-      this.totalBorrowed = summary.totalBorrowedCount;
-      this.booksToReturn = summary.currentlyBorrowedCount;
-      this.totalFine = summary.totalFine;
+        this.homeSummary={
+          totalBooks : summary.totalBooks,
+          totalBorrowed : summary.totalBorrowedCount,
+          booksToReturn : summary.currentlyBorrowedCount,
+          totalFine : summary.totalFine
+        };
       },
       error: (err) => {
         console.error('Error fetching student dashboard:', err);

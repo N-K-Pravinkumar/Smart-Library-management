@@ -20,14 +20,19 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let record of filteredRecords">
+    @for(record of filteredRecords;track record.book.bookId){
+      <tr>
       <td>{{ record.book.bookName }}</td>
       <td>{{ record.borrowDate }}</td>
       <td>{{ record.overDueDays }}</td>
       <td>{{ record.fine }}</td>
       <td>{{ record.pay ? 'Yes' : 'No' }}</td>
       <td>
-        <button *ngIf="!record.returned" (click)="handleReturn(record)">Return</button>
+        @if(!record.returned){
+          <button (click)="handleReturn(record)">Return</button>
+        }
       </td>
+      </tr>
+    }
   </tbody>
 </table>

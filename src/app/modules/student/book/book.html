@@ -18,6 +18,7 @@
     </div>
 
     <div class="book-list">
+      @for (book of filteredBooks; track book.bookId) {
       <div *ngFor="let book of filteredBooks; trackBy: trackByBookId" 
            class="book-card" 
            [ngClass]="book.borrowed ? 'borrowed-book' : 'available-book'">
@@ -28,14 +29,19 @@
           <p><strong>Status:</strong> {{ book.borrowed ? 'Borrowed' : 'Available' }}</p>
         </div>
         <div class="book-action">
-          <button *ngIf="!book.borrowed" (click)="borrowBook(book)" class="borrow-button">Borrow</button>
-          <span *ngIf="book.borrowed" class="unavailable-text">Unavailable</span>
+          @if(!book.borrowed){
+            <button (click)="borrowBook(book)" class="borrow-button">Borrow</button>
+          }@else {
+            <span class="unavailable-text">Unavailable</span>
+          }
         </div>
       </div>
-
-      <div *ngIf="filteredBooks.length === 0" class="no-results">
-        No books match your search/filter.
-      </div>
+    }
+      @if (filteredBooks.length==0) {
+        <div class="no-results">
+          No books match your search/filter.
+        </div>
+      }
     </div>
   </div>
 </div>
