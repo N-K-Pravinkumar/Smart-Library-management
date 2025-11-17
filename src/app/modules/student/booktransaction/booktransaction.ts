@@ -63,6 +63,7 @@ export class Booktransaction implements OnInit {
     this.borrowService.returnBook(record.borrowId).subscribe({
       next: () => {
         record.returned = true; 
+        this.returnBook(record);
         alert('Book returned successfully!');
       },
       error: (err) => {
@@ -94,12 +95,20 @@ handleReturn(record: BorrowRecord) {
   }
 }
 
-private returnBook(record: BorrowRecord) {
+ private returnBook(record: BorrowRecord) {
   if (confirm(`Return the book "${record.book.bookName}"?`)) {
     this.borrowService.returnBook(record.borrowId).subscribe({
       next: () => {
-        this.filteredRecords = this.filteredRecords.filter(r => r.borrowId !== record.borrowId);
-        this.records = this.records.filter(r => r.borrowId !== record.borrowId)  .sort((a, b) => b.borrowId - a.borrowId);;
+
+        // ❗ FIX: Do NOT remove the record
+        // Update its returned state
+        record.returned = true;
+        record.returnDate = new Date().toISOString();
+        record.pay = true;  
+
+        // refresh arrays so UI updates
+        this.records = [...this.records];
+        this.filteredRecords = [...this.filteredRecords];
 
         alert('Book returned successfully!');
       },
@@ -110,6 +119,7 @@ private returnBook(record: BorrowRecord) {
     });
   }
 }
+
 
 
 
