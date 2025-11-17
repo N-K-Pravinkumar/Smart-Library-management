@@ -95,7 +95,7 @@ handleReturn(record: BorrowRecord) {
   }
 }
 
- private returnBook(record: BorrowRecord) {
+returnBook(record: BorrowRecord) {
   if (confirm(`Return the book "${record.book.bookName}"?`)) {
     this.borrowService.returnBook(record.borrowId).subscribe({
       next: () => {
