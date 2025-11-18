@@ -1,7 +1,10 @@
 <nav>
   <div class="navtop">
-    <div class="lib-name">Welcome To  We-Library! </div>
-    <div class="username">Heyy..!  {{username}}</div>
+    <div class="lib-name">Welcome To We-Library!</div>
+    <div class="username">Heyy..! {{username}}</div>
+  </div>
+  <div class="progress-container">
+    <div id="myBar" class="progress-bar" [style.width.%]="scrollWidth"></div>
   </div>
 
   <div class="navleft">
@@ -11,15 +14,13 @@
       <a routerLink="/librarian/transaction" routerLinkActive="active">Book Transaction</a>
       <a routerLink="/librarian/reports" routerLinkActive="active">Reports</a>
     }
-  
 
-      @if(role=='student'){
-        <a routerLink="/student/home" routerLinkActive="active">Home</a>
-        <a routerLink="/student/book" routerLinkActive="active">Book</a>
-        <a routerLink="/student/transaction" routerLinkActive="active">Book Transaction</a>
-        <a routerLink="/student/reports" routerLinkActive="active">Reports</a>
-
-      }
+    @if (role === 'student') {
+      <a routerLink="/student/home" routerLinkActive="active">Home</a>
+      <a routerLink="/student/book" routerLinkActive="active">Book</a>
+      <a routerLink="/student/transaction" routerLinkActive="active">Book Transaction</a>
+      <a routerLink="/student/reports" routerLinkActive="active">Reports</a>
+    }
 
     <button class="logout" (click)="logout()">Logout</button>
   </div>

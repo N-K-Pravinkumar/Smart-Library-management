@@ -3,7 +3,6 @@
   font-family: Arial, sans-serif;
 }
 
-/* Add button */
 .add-btn {
   background: #28a745;
   color: white;
@@ -15,7 +14,6 @@
   margin-bottom: 20px;
 }
 
-/* Modal overlay */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0;
@@ -24,7 +22,6 @@
   z-index: 998;
 }
 
-/* Modal box */
 .modal-box {
   position: fixed;
   top: 50%; left: 50%;
@@ -80,7 +77,16 @@
 }
 .cancel:hover { background: darkred; }
 
-/* Book list */
+.status-available {
+  color: #0b7a20;
+  font-weight: bold;
+}
+
+.status-borrowed {
+  color: #c62828;
+  font-weight: bold;
+}
+  
 .book-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -97,6 +103,8 @@
   flex-direction: column;
   gap: 6px;
   box-shadow: 1px 5px 15px rgba(0,0,0,0.05);
+          
+  overflow: hidden;
 }
 
 .book-card button {
@@ -106,6 +114,7 @@
   cursor: pointer;
   font-size: 0.85rem;
   margin-top: 6px;
+  
 }
 
 .book-card button:first-of-type { background: #007bff; color: #fff; }

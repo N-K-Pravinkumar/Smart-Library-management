@@ -9,6 +9,9 @@ interface BookModel {
   author: string;
   category: string;
   borrowed?: boolean;
+  returned?: boolean;
+  totalBook?: number;   
+  available?: number;   
 }
 
 @Component({
@@ -21,13 +24,17 @@ interface BookModel {
 export class Book implements OnInit {
   books: BookModel[] = [];
   filteredBooks: BookModel[] = [];
+
   filterForm: FormGroup;
   bookForm: FormGroup;
-  add: boolean=false;
-  editMode: boolean = false;
+
+  add = false;
+  editMode = false;
   selectedBookId?: number;
 
   trackByBookId: TrackByFunction<BookModel> = (index, book) => book.bookId ?? index;
+
+  private apiBase = 'http://localhost:8080/api/librarian/book';
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.filterForm = this.fb.group({
@@ -38,7 +45,11 @@ export class Book implements OnInit {
     this.bookForm = this.fb.group({
       bookName: [''],
       author: [''],
-      category: ['']
+      category: [''],
+      totalBook: [],  
+      available: [],   
+      borrowed: [false],
+      returned: [true]
     });
   }
 
@@ -48,9 +59,19 @@ export class Book implements OnInit {
   }
 
   loadBooks(): void {
-    this.http.get<BookModel[]>('http://localhost:8080/api/librarian/book').subscribe({
+    this.http.get<any[]>(this.apiBase).subscribe({
       next: data => {
-        this.books = data.map(b => ({ ...b, borrowed: !!b.borrowed }));
+        this.books = data.map(b => {
+          const total = b.totalCopies ?? b.copies ?? b.totalBook ?? b.total ?? 1;
+          const avail = b.availableCopies ?? b.available ?? b.availableCount ?? b.availableBook ?? total;
+          return {
+            ...b,
+            borrowed: !!b.borrowed,
+            returned: !!b.returned,
+            totalBook: Number(total),
+            available: Number(avail)
+          } as BookModel;
+        });
         this.filteredBooks = [...this.books];
       },
       error: err => console.error('Error loading books:', err)
@@ -59,16 +80,18 @@ export class Book implements OnInit {
 
   applyFilters(): void {
     const { searchText, statusFilter } = this.filterForm.value;
+    const q = (searchText || '').toString().toLowerCase();
+
     this.filteredBooks = this.books.filter(book => {
       const matchesSearch =
-        book.bookName.toLowerCase().includes(searchText.toLowerCase()) ||
-        book.author.toLowerCase().includes(searchText.toLowerCase()) ||
-        (book.bookId?.toString().includes(searchText) ?? false);
+        (book.bookName || '').toLowerCase().includes(q) ||
+        (book.author || '').toLowerCase().includes(q) ||
+        (book.bookId?.toString().includes(q) ?? false);
 
       const matchesStatus =
         statusFilter === 'all' ||
-        (statusFilter === 'borrowed' && book.borrowed) ||
-        (statusFilter === 'available' && !book.borrowed);
+        (statusFilter === 'borrowed' && (book.borrowed ?? (book.available === 0))) ||
+        (statusFilter === 'available' && !(book.borrowed ?? (book.available === 0)));
 
       return matchesSearch && matchesStatus;
     });
@@ -80,64 +103,95 @@ export class Book implements OnInit {
   }
 
   addOrUpdateBook(): void {
-    const bookData = this.bookForm.value;
+    const raw = this.bookForm.value;
 
-    if (this.editMode && this.selectedBookId!) {
-      this.http.patch(`http://localhost:8080/api/librarian/book/${this.selectedBookId}`, bookData)
-        .subscribe({
-          next: () => {
-            alert('Book updated successfully!');
-            this.editMode = false;
-            this.selectedBookId = undefined;
-            this.bookForm.reset();
-            this.loadBooks();
-          },
-          error: err => alert('Failed to update book.')
-        });
+    const totalNum = Number(raw.totalBook || 1);
+    let availableNum = Number(raw.available ?? totalNum);
+    if (availableNum > totalNum) availableNum = totalNum;
+    const payload = {
+      bookName: raw.bookName,
+      author: raw.author,
+      category: raw.category,
+      totalCopies: totalNum,   
+      availableCopies: availableNum,
+      borrowed: raw.borrowed,
+      returned: raw.returned
+    };
+
+    if (this.editMode && this.selectedBookId) {
+      this.http.patch(`${this.apiBase}/${this.selectedBookId}`, payload).subscribe({
+        next: () => {
+          alert('Book updated successfully!');
+          this.editMode = false;
+          this.selectedBookId = undefined;
+          this.bookForm.reset();
+          // reset defaults after reset
+          this.bookForm.patchValue({ totalBook: 1, available: 1, borrowed: false, returned: true });
+          this.loadBooks();
+        },
+        error: err => {
+          console.error(err);
+          alert('Failed to update book.');
+        }
+      });
     } else {
-      this.http.post('http://localhost:8080/api/librarian/book', bookData)
-        .subscribe({
-          next: () => {
-            alert('Book added successfully!');
-            this.add=false;
-            this.bookForm.reset();
-            this.loadBooks();
-          },
-          error: err => alert('Failed to add book.')
-        });
+      this.http.post(this.apiBase, payload).subscribe({
+        next: () => {
+          alert('Book added successfully!');
+          this.add = false;
+          this.bookForm.reset();
+          this.bookForm.patchValue({ totalBook: 1, available: 1, borrowed: false, returned: true });
+          this.loadBooks();
+        },
+        error: err => {
+          console.error(err);
+          alert('Failed to add book.');
+        }
+      });
     }
   }
 
- openForm() {
-  this.add = true;
-  this.editMode = false;
-}
+  openForm() {
+    this.add = true;
+    this.editMode = false;
+    // ensure form defaults
+    this.bookForm.patchValue({ totalBook: 1, available: 1, borrowed: false, returned: true });
+  }
 
-closeForm() {
-  this.add = false;
-  this.editMode = false;
-  this.bookForm.reset();
-}
+  closeForm() {
+    this.add = false;
+    this.editMode = false;
+    this.bookForm.reset();
+    this.bookForm.patchValue({ totalBook: 1, available: 1, borrowed: false, returned: true });
+  }
 
   editBook(book: BookModel): void {
     this.editMode = true;
     this.selectedBookId = book.bookId;
+    this.add = true; // show modal
     this.bookForm.setValue({
-      bookName: book.bookName,
-      author: book.author,
-      category: book.category
+      bookName: book.bookName ?? '',
+      author: book.author ?? '',
+      category: book.category ?? '',
+      totalBook: book.totalBook ?? 1,
+      available: book.available ?? (book.totalBook ?? 1),
+      borrowed: !!book.borrowed,
+      returned: !!book.returned
     });
   }
 
   deleteBook(bookId: number): void {
     if (!confirm('Are you sure you want to delete this book?')) return;
 
-    this.http.delete(`http://localhost:8080/api/librarian/book/${bookId}`).subscribe({
+    this.http.delete(`${this.apiBase}/${bookId}`).subscribe({
       next: () => {
         alert('Book deleted successfully!');
         this.loadBooks();
       },
-      error: err => alert('Failed to delete book.')
+      error: err => {
+        console.error(err);
+        alert('Failed to delete book.');
+      }
     });
   }
 }

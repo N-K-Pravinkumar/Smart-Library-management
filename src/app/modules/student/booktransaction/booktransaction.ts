@@ -103,6 +103,7 @@ private returnBook(record: BorrowRecord) {
         record.returned = true;
         record.returnDate = new Date().toISOString();
         record.pay = true;  
+        
         this.records = [...this.records];
         this.filteredRecords = [...this.filteredRecords];
 
