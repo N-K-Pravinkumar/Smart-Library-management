@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -15,6 +15,7 @@ export class Layout implements OnInit {
   username = localStorage.getItem('username') || '';
   role: 'librarian' | 'student' | '' = '';
   baseRoute = '';
+   scrollWidth = 0;
 
   constructor(private router: Router) {}
 
@@ -25,7 +26,7 @@ export class Layout implements OnInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => this.loadUserInfo());
   }
-
+  
   loadUserInfo(): void {
     const storedRole = localStorage.getItem('role');
     const storedUsername = localStorage.getItem('username');
@@ -51,5 +52,14 @@ export class Layout implements OnInit {
   logout(): void {
     localStorage.clear();
     this.router.navigate(['/login']);
+  }
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    const height =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight;
+
+    this.scrollWidth = (winScroll / height) * 100; 
   }
 }

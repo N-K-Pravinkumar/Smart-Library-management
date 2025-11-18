@@ -1,18 +1,3 @@
-// .navtop{
-//   margin: 0%;
-//   margin-top: 0%;
-//   padding: 0%;
-//   height: 7vh;
-//   text-align: center;
-  
-//   border-radius: 4px;
-//   display: inline;
-//   display: flex;
-//   flex-direction: row;
-//   margin-left: 220px;
-//   border: 1px solid white;
-// }
-
 * {
   margin: 0;
   padding: 0;
@@ -20,70 +5,84 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* ------------------ TOP NAVBAR ------------------ */
 .navtop {
-  position:absolute;
-  top: 5px;
-  left: 228px;
+  position: fixed;
+  top: 0;
+  left: 220px;
   right: 0;
   height: 60px;
   background-color: #ffffff;
-  border-bottom: 2px solid #c7c9cb;
-  border-radius: 10px;
+  border-bottom: 2px solid #f0f3f7;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 22px;
+  justify-content: space-between;
+  padding: 0 25px;
+  font-size: 20px;
   font-weight: 600;
-  color: #000000;
+  color: #000;
   z-index: 1000;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Progress Bar */
+.progress-container {
+  position: fixed;
+  top: 60px;           
+  left: 220px;         
+  right: 0;
+  height: 6px;
+  background: #fffbfb;
+  z-index: 900;
+}
+
+.progress-bar {
+  height: 6px;
+  width: 0%;
+  background: #4fa8db;
+}
+
+/* ------------------ LEFT SIDEBAR ------------------ */
 .navleft {
   position: fixed;
   top: 0;
   left: 0;
   width: 220px;
   height: 100vh;
-  background-color: white;
+  background: #ffffff;
   border-right: 2px solid rgb(160, 202, 247);
-  border-radius:100px ;
   padding-top: 80px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 10px;
 }
 
+/* Sidebar links */
 .navleft a {
   text-decoration: none;
   color: #0a0303;
   padding: 12px 20px;
   width: 100%;
   display: block;
-  transition: all 0.1s ease-out;
-  border-radius: 100px;
+  transition: 0.2s;
+  border-radius: 8px;
 }
 
-.navleft a:hover,
-.navleft a.active {
+.navleft a.active, 
+.navleft a:hover {
   background-color: #e8f2f9;
-  color: rgb(71, 126, 171);
-
+  color: #2c82d6;
 }
+
+/* Username text in navbar */
 .username {
-  position: absolute;
-  // top: px;
-  right: 20px;
   font-size: 16px;
-  color: #333;
-  flex-direction: row;
-  text-align: end;
-  color: #000000;
-  font-family:monospace;
-
+  font-family: monospace;
+  color: #444;
+  margin-right: 10px;
 }
 
+/* Logout button */
 .logout {
   margin-top: auto;
   margin-left: 20px;
@@ -92,16 +91,16 @@
   border: none;
   color: #fff;
   padding: 10px 25px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .logout:hover {
-  background-color: #e2c3c3;
+  background-color: #8c4740;
 }
 
-/* Content Area */
+/* ------------------ CONTENT AREA ------------------ */
 .contentarea {
   margin-left: 220px;
   margin-top: 60px;

@@ -43,7 +43,6 @@ export class Reports implements OnInit {
   loadRecords() {
     this.reportService.getBorrowingRecords().subscribe({
       next: (data: any[]) => {
-        // Filter only the logged-in student's records
         this.records = data.filter(r => r.studentId === this.studentId).reverse();
         this.filteredRecords = [...this.records];
         this.calculateTotalFine();
