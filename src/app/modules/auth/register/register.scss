@@ -1,11 +1,12 @@
-/* Full container layout */
 .register-container {
   display: flex;
   height: 100vh;
   background-color: #cccccc;
 }
+// .role{
+//   border-radius: 10px;
+// }
  
-/* Left image section */
 .register-image {
   flex: 1;
   background-color: #f5f3eb;
@@ -19,10 +20,10 @@
   max-width: 400px;
 }
  
-/* Right form section */
+
 .register-form {
   flex: 1;
-  background-color: #001f4d; /* dark blue */
+  background-color: #001f4d; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,6 +39,9 @@
 h2 {
   margin-bottom: 20px;
   color: white;
+}
+.inp{
+  width: 25.5rem;
 }
  
 .input-group {
@@ -59,8 +63,11 @@ h2 {
     width: 100px;
 }
 .btnregister {
-  width: 100%;
-  background-color: #ff6600; /* orange button */
+  // width: 100%;
+   margin-left: 2.5rem;
+     width: 10rem;
+
+  background-color: #ff6600; 
   color: white;
   padding: 12px;
   border: none;
@@ -82,6 +89,7 @@ h2 {
 .login-text {
   margin-top: 15px;
   font-size: 14px;
+  margin-left: 2.5rem;
 }
  
 .login-text a {

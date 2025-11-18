@@ -46,7 +46,8 @@ export class BorrowService {
     return this.http.put(`${this.baseUrl}/transaction/${borrowId}/return`, {});
   }
 
-  markFineAsPaid(borrowId: number): Observable<any> {
-    return this.http.put(`${this.baseUrl}/transaction/${borrowId}/return`, {});
-  }
+  markFineAsPaid(borrowId: number) {
+  return this.http.put(`${this.baseUrl}/transaction/${borrowId}/pay`, {});
+}
+
 }

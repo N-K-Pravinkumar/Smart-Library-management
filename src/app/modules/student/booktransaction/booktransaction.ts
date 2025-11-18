@@ -63,6 +63,7 @@ export class Booktransaction implements OnInit {
     this.borrowService.returnBook(record.borrowId).subscribe({
       next: () => {
         record.returned = true; 
+        this.returnBook(record);
         alert('Book returned successfully!');
       },
       error: (err) => {
@@ -98,6 +99,7 @@ private returnBook(record: BorrowRecord) {
   if (confirm(`Return the book "${record.book.bookName}"?`)) {
     this.borrowService.returnBook(record.borrowId).subscribe({
       next: () => {
+
         record.returned = true;
         record.returnDate = new Date().toISOString();
         record.pay = true;  
