@@ -38,7 +38,7 @@ export class Book implements OnInit {
       alert('No student logged in!');
       return;
     }
-    this.studentId = parseInt(storedId, 10);
+      this.studentId = parseInt(storedId, 10);
     this.loadBooks();
 
     this.filterForm.valueChanges.subscribe(() => this.applyFilters());

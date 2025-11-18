@@ -100,13 +100,9 @@ returnBook(record: BorrowRecord) {
     this.borrowService.returnBook(record.borrowId).subscribe({
       next: () => {
 
-        // ❗ FIX: Do NOT remove the record
-        // Update its returned state
         record.returned = true;
         record.returnDate = new Date().toISOString();
         record.pay = true;  
-
-        // refresh arrays so UI updates
         this.records = [...this.records];
         this.filteredRecords = [...this.filteredRecords];
 

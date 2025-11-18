@@ -8,7 +8,6 @@
 
       <h2>Create an Account</h2>
 
-      <!-- Username -->
       <div class="input-group">
         <input 
           type="text"
@@ -20,7 +19,6 @@
         </small>
       </div>
 
-      <!-- Email -->
       <div class="input-group">
         <input 
           type="email"
@@ -32,7 +30,6 @@
         </small>
       </div>
 
-      <!-- Password -->
       <div class="input-group">
         <input 
           type="password"
@@ -43,8 +40,7 @@
           Password must be at least 5 characters.
         </small>
       </div>
-
-      <!-- Role -->
+      <div class="inp">
       <div class="input-group">
         <select formControlName="role">
           <option value="" disabled>Select Role</option>
@@ -54,6 +50,7 @@
         <small class="error" *ngIf="role.invalid && (role.touched || role.dirty)">
           Please select a role.
         </small>
+      </div>
       </div>
 
       <button 

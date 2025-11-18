@@ -29,7 +29,6 @@ export class Login {
     });
   }
 
-  // getters for template
   get email() {
     return this.loginForm.get('email')!;
   }
