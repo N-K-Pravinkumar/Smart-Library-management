@@ -37,7 +37,7 @@ export class Booktransaction implements OnInit {
       this.records = data.map(record => ({
         ...record,
         returned: record.returnDate !== null
-      }));
+      })).reverse();
       this.filteredRecords = [...this.records];
     },
     error: (err) => console.error('Error loading transactions', err)
@@ -95,7 +95,7 @@ handleReturn(record: BorrowRecord) {
   }
 }
 
-returnBook(record: BorrowRecord) {
+private returnBook(record: BorrowRecord) {
   if (confirm(`Return the book "${record.book.bookName}"?`)) {
     this.borrowService.returnBook(record.borrowId).subscribe({
       next: () => {

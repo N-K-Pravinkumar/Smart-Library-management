@@ -44,7 +44,7 @@ export class Reports implements OnInit {
     this.reportService.getBorrowingRecords().subscribe({
       next: (data: any[]) => {
         // Filter only the logged-in student's records
-        this.records = data.filter(r => r.studentId === this.studentId);
+        this.records = data.filter(r => r.studentId === this.studentId).reverse();
         this.filteredRecords = [...this.records];
         this.calculateTotalFine();
         console.log(' Received transaction data:', this.records);
@@ -54,7 +54,7 @@ export class Reports implements OnInit {
   }
 
   setFilter(status: string) {
-    this.filterForm.setValue({ filterStatus: status });
+    this.filterForm.patchValue({ filterStatus: status });
   }
 
   applyFilters() {
@@ -62,7 +62,6 @@ export class Reports implements OnInit {
     const term = (searchTerm || '').toLowerCase();
 
     this.filteredRecords = this.records.filter(record => {
-      //  Search filter
       let matchesSearch = true;
       if (term) {
         if (searchType === 'bookId') {

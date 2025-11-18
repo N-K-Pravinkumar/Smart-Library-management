@@ -35,7 +35,7 @@ export class Booktransaction implements OnInit {
       next: (data: TransactionRecord[]) => {
             
         // this.records = data.sort((a, b) => b.borrowId - a.borrowId);
-        this.records = data;
+        this.records = data.reverse();
         this.filteredRecords = data;
         console.log('Received transaction data:', data);
 
