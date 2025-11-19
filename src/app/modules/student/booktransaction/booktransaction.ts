@@ -37,7 +37,7 @@ export class Booktransaction implements OnInit {
       this.records = data.map(record => ({
         ...record,
         returned: record.returnDate !== null
-      })).reverse();
+      }));
       this.filteredRecords = [...this.records];
     },
     error: (err) => console.error('Error loading transactions', err)

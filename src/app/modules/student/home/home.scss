@@ -1,47 +1,108 @@
-.container {
+.filter-container {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100vw; 
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+  z-index: 999;
 }
 
-.dashboard {
+.modal {
+  background: #fff;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  width: 30%; 
+  max-width: 22rem; 
   text-align: center;
 }
 
-.cards {
+.modal-actions {
+  margin-top: 1.25rem;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
+  justify-content: space-around;
 }
 
-.card {
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  width: 220px;
-  padding: 20px;
-  transition: 0.3s ease;
+.filter-container input {
+  padding: 0.4rem 0.6rem;
+  border: 0.1rem solid #ccc; 
+  border-radius: 0.25rem; 
+  min-width: 12.5rem; 
+  font-size: 0.9rem;
 }
 
-.card:hover {
-  transform: translateY(-6px);
+.filter-container button {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 0.25rem; 
+  background-color: #007bff;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.count {
-  color: #333;
-  font-size: 2rem;
-  margin: 10px 0;
+.filter-container button:hover {
+  background-color: #0056b3;
 }
 
-.total-books { border-top: 5px solid #007bff; }
-.borrowed { border-top: 5px solid #28a745; }
-.to-return { border-top: 5px solid #ffc107; }
-.fine { border-top: 5px solid #dc3545; }
+.records-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-family: Arial, sans-serif;
+}
 
-.top {
-  margin-top: 30px;
-  font-style: italic;
-  color: #444;
+.records-table thead {
+  background-color: #f4f4f4;
+}
+
+.records-table th,
+.records-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 0.1rem solid #ddd;
+  font-size: 0.9rem;
+}
+
+.records-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.records-table tbody tr:hover {
+  background-color: #e6f2ff;
+}
+
+.records-table button {
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+.records-table button:hover {
+  background-color: #218838;
+}
+
+.records-table td:nth-child(8) {
+  font-weight: 600;
+}
+
+.records-table td:nth-child(8):before {
+  content: '';
 }

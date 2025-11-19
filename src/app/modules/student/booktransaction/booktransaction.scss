@@ -5,10 +5,13 @@
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
 .modal-backdrop {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0; 
+  left: 0;
+  width: 100vw; 
+  height: 100vh;
   background: rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
@@ -18,31 +21,31 @@
 
 .modal {
   background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
+  padding: 1.25rem; 
+  border-radius: 0.5rem; 
+  width: 30%; 
+  max-width: 22rem; 
   text-align: center;
 }
 
 .modal-actions {
-  margin-top: 20px;
+  margin-top: 1.25rem; 
   display: flex;
   justify-content: space-around;
 }
 
-
 .filter-container input {
   padding: 0.4rem 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  min-width: 200px;
+  border: 0.1rem solid #ccc; 
+  border-radius: 0.25rem; 
+  min-width: 12.5rem; 
   font-size: 0.9rem;
 }
 
 .filter-container button {
   padding: 0.4rem 0.8rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem; 
   background-color: #007bff;
   color: #fff;
   font-size: 0.9rem;
@@ -69,7 +72,7 @@
 .records-table td {
   padding: 0.75rem;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 0.1rem solid #ddd;
   font-size: 0.9rem;
 }
 
@@ -84,7 +87,7 @@
 .records-table button {
   padding: 0.3rem 0.6rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: #28a745;
   color: #fff;
   cursor: pointer;
@@ -103,4 +106,3 @@
 .records-table td:nth-child(8):before {
   content: '';
 }
-
