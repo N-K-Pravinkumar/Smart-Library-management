@@ -23,7 +23,7 @@ export class Booktransaction implements OnInit {
   ngOnInit(): void {
     this.filterForm = this.fb.group({ searchText: [''] });
 
-    const studentIdStr = localStorage.getItem('userId');
+    const studentIdStr = sessionStorage.getItem('userId');
     if (!studentIdStr) { alert('No student logged in'); return; }
     this.loggedInUserId = studentIdStr;
 

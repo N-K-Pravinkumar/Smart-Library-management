@@ -21,7 +21,7 @@ export class Home implements OnInit {
   constructor(private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
-    const studentId = Number(localStorage.getItem('userId'));
+    const studentId = Number(sessionStorage.getItem('userId'));
     if (!studentId) {
       alert('No student logged in!');
       return;

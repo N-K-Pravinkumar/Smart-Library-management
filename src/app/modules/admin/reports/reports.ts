@@ -30,7 +30,7 @@ export class Reports implements OnInit {
     });
 
     this.loadRecords();
-    const storedRole = localStorage.getItem('role');
+    const storedRole = sessionStorage.getItem('role');
     
 
     this.filterForm.valueChanges.subscribe(() => this.applyFilters());
