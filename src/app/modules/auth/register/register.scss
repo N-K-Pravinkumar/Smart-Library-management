@@ -3,10 +3,7 @@
   height: 100vh;
   background-color: #cccccc;
 }
-// .role{
-//   border-radius: 10px;
-// }
- 
+
 .register-image {
   flex: 1;
   background-color: #f5f3eb;
@@ -14,95 +11,91 @@
   align-items: center;
   justify-content: center;
 }
- 
+
 .register-image img {
   width: 70%;
-  max-width: 400px;
+  max-width: 25rem;
 }
- 
 
 .register-form {
   flex: 1;
-  background-color: #001f4d; 
+  background-color: #001f4d;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
 }
- 
+
 .form-card {
   width: 80%;
-  max-width: 380px;
+  max-width: 23.75rem;
   text-align: center;
 }
- 
+
 h2 {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   color: white;
 }
-.inp{
-  width: 25.5rem;
+
+.inp {
+  width: 26vw;
 }
- 
+
 .input-group {
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
- 
+
 .input-group input,
 .input-group select {
   width: 100%;
-  padding: 12px 15px;
-  border-radius: 25px;
+  padding: 0.75rem 1rem;
+  border-radius: 1.5625rem;
   border: none;
   outline: none;
   background-color: white;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
-.imgg{
-    height: 100px;
-    width: 100px;
-}
-.btnregister {
-  // width: 100%;
-   margin-left: 2.5rem;
-     width: 10rem;
 
-  background-color: #ff6600; 
+.imgg {
+  height: 10vh;
+  width: 10vh;
+}
+
+.btnregister {
+  margin-left: 2.5rem;
+  width: 10rem;
+  background-color: #ff6600;
   color: white;
-  padding: 12px;
+  padding: 0.75rem;
   border: none;
-  border-radius: 25px;
+  border-radius: 1.5625rem;
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
 }
- 
+
 .btnregister:hover {
   background-color: #ff4500;
 }
- 
+
 .error {
-  color: #ff6666;
-  font-size: 14px;
+  color: red;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
 }
- 
+
 .login-text {
-  margin-top: 15px;
-  font-size: 14px;
+  margin-top: 1rem;
+  font-size: 0.875rem;
   margin-left: 2.5rem;
 }
- 
+
 .login-text a {
   color: #ff6600;
   text-decoration: none;
 }
- 
+
 .loading {
   color: #cccccc;
-}
-.error {
-  color: red;
-  font-size: 12px;
-  margin-top: 4px;
-  display: block;
 }

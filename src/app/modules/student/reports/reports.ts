@@ -43,7 +43,7 @@ export class Reports implements OnInit {
   loadRecords() {
     this.reportService.getBorrowingRecords().subscribe({
       next: (data: any[]) => {
-        this.records = data.filter(r => r.studentId === this.studentId).reverse();
+        this.records = data.filter(r => r.studentId === this.studentId);
         this.filteredRecords = [...this.records];
         this.calculateTotalFine();
         console.log(' Received transaction data:', this.records);
