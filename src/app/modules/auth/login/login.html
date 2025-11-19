@@ -14,11 +14,19 @@
             formControlName="email"
             placeholder="Enter email"
           />
-
-          <div class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
+          @if(email.invalid && (email.dirty|| email.touched)){
+            <div class="error">
+              @if(email.errors?.['required']){
+                <small>Email is required.</small>
+              }@if(email.errors?.['email']){
+                <small>Enter a valid email address.</small>
+              }
+            </div>
+          }
+          <!-- <div class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
             <small *ngIf="email.errors?.['required']">Email is required.</small>
             <small *ngIf="email.errors?.['email']">Enter a valid email address.</small>
-          </div>
+          </div> -->
         </div>
 
         <div class="input-group">
@@ -27,20 +35,30 @@
             formControlName="password"
             placeholder="Enter password"
           />
-
-          <div class="error" *ngIf="password.invalid && (password.dirty || password.touched)">
-            <small *ngIf="password.errors?.['required']">Password is required.</small>
+            @if(password.invalid && (password.dirty || password.touched)){
+              <div class="error">
+                @if(password.errors?.['required']){
+                  <small>Password is required.</small>
+                }@if(password.errors?.['minlength']){
+                  <small>Password must be at least 6 characters.</small>
+                }
+              </div>
+            }
+          
+            <!-- <small *ngIf="password.errors?.['required']">Password is required.</small>
             <small *ngIf="password.errors?.['minlength']">
               Password must be at least 6 characters.
             </small>
-          </div>
+          </div> -->
         </div>
 
         <button type="submit" class="btnregister" [disabled]="loading || loginForm.invalid">
           {{ loading ? 'Logging in...' : 'Login' }}
         </button>
-
-        <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+        @if(errorMessage){
+          <p class="error">{{ errorMessage }}</p>
+        }
+        <!-- <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p> -->
       </form>
 
       <div class="login-text">
