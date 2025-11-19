@@ -14,9 +14,17 @@
           formControlName="username"
           placeholder="Enter username"
         />
-        <small class="error" *ngIf="username.invalid && (username.touched || username.dirty)">
+
+        @if(username.invalid && (username.touched || username.dirty)){
+          <div class="error">
+            @if(username.errors?.['required']){
+              <small>Username is required.</small>
+            }
+          </div>
+        }
+        <!-- <small class="error" *ngIf="username.invalid && (username.touched || username.dirty)">
           Username is required.
-        </small>
+        </small> -->
       </div>
 
       <div class="input-group">
@@ -25,9 +33,18 @@
           formControlName="email"
           placeholder="Enter email"
         />
-        <small class="error" *ngIf="email.invalid && (email.touched || email.dirty)">
+        @if(email.invalid && (email.touched || email.dirty)){
+          <div class="error">
+            @if(email.errors?.['required']){
+              <small>Email is required.</small>
+            }@if(email.errors?.['email']){
+              <small>Enter a valid email.</small>
+            }
+          </div>
+        }
+        <!-- <small class="error" *ngIf="email.invalid && (email.touched || email.dirty)">
           Enter a valid email.
-        </small>
+        </small> -->
       </div>
 
       <div class="input-group">
@@ -36,9 +53,18 @@
           formControlName="password"
           placeholder="Enter password"
         />
-        <small class="error" *ngIf="password.invalid && (password.touched || password.dirty)">
+        @if(password.invalid && (password.touched || password.dirty)){
+          <div class="error">
+            @if(password.errors?.['required']){
+              <small>Password is required.</small>
+            }@if(password.errors?.['minlength']){
+              <small>Password must be at least 5 characters.</small>
+            }
+          </div>
+        } 
+        <!-- <small class="error" *ngIf="password.invalid && (password.touched || password.dirty)">
           Password must be at least 5 characters.
-        </small>
+        </small> -->
       </div>
       <div class="inp">
       <div class="input-group">
@@ -47,9 +73,12 @@
           <option value="Student">Student</option>
           <option value="Librarian">Librarian</option>
         </select>
-        <small class="error" *ngIf="role.invalid && (role.touched || role.dirty)">
-          Please select a role.
-        </small>
+        @if(role.invalid && (role.touched || role.dirty)){
+          <div class="error">
+            <small>Please select a role.</small>
+          </div>
+        }
+      
       </div>
       </div>
 
@@ -60,8 +89,10 @@
       >
         {{ loading ? 'Registering...' : 'Sign Up' }}
       </button>
-
-      <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+      @if(errorMessage){
+        <p class="error">{{ errorMessage }}</p>
+      }
+      <!-- <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p> -->
 
       <p class="login-text">
         Already have an account? <a routerLink="/login">Login In</a>

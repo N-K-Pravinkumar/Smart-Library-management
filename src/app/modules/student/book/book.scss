@@ -34,38 +34,32 @@
   gap: 10px;
   align-items: center;
 }
-/* Position & spacing */
 .toast-top-right {
   top: 80px;
   right: 20px;
 }
 
-/* Toast box style */
 .toast {
   border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
 }
 
-/* Success toast */
 .toast-success {
   background-color: #4caf50 !important;
   color: #fff !important;
 }
 
-/* Error toast */
 .toast-error {
   background-color: #f44336 !important;
   color: #fff !important;
 }
 
-/* Info toast */
 .toast-info {
   background-color: #2196f3 !important;
   color: #fff !important;
 }
 
-/* Warning toast */
 .toast-warning {
   background-color: #ff9800 !important;
   color: #fff !important;

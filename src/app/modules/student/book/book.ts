@@ -22,7 +22,7 @@ export class Book implements OnInit {
   books: BookModel[] = [];
   filteredBooks: BookModel[] = [];
   filterForm: FormGroup;
-  studentId!: number;
+  studentId!: number; 
 
   private snackBar = inject(MatSnackBar);
 
@@ -106,7 +106,7 @@ export class Book implements OnInit {
       duration: 3000,
       horizontalPosition: 'right',
       verticalPosition: 'top',
-      panelClass: [`toast-${type}`] // apply custom styling
+      panelClass: [`toast-${type}`] 
     });
   }
 }
