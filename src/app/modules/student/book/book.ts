@@ -8,7 +8,8 @@ interface BookModel {
   bookId: number;
   bookName: string;
   author: string;
-  borrowed: boolean;
+  borrowed: boolean;  
+  availableCopies: number;  
 }
 
 @Component({
@@ -19,6 +20,7 @@ interface BookModel {
   styleUrls: ['./book.scss']
 })
 export class Book implements OnInit {
+
   books: BookModel[] = [];
   filteredBooks: BookModel[] = [];
   filterForm: FormGroup;
@@ -31,7 +33,7 @@ export class Book implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.filterForm = this.fb.group({
       searchText: [''],
-      statusFilter: ['available']
+      statusFilter: ['all']
     });
   }
 
@@ -41,16 +43,16 @@ export class Book implements OnInit {
       this.showToast('No student logged in!', 'error');
       return;
     }
-      this.studentId = parseInt(storedId, 10);
-    this.loadBooks();
 
+    this.studentId = parseInt(storedId, 10);
+    this.loadBooks();
     this.filterForm.valueChanges.subscribe(() => this.applyFilters());
   }
 
   loadBooks(): void {
     this.http.get<BookModel[]>('http://localhost:8080/api/student/book').subscribe({
       next: data => {
-        this.books = data.map(b => ({ ...b, borrowed: !!b.borrowed }));
+        this.books = data;
         this.filteredBooks = [...this.books];
       },
       error: err => this.showToast('Error loading books', 'error')
@@ -59,6 +61,7 @@ export class Book implements OnInit {
 
   applyFilters(): void {
     const { searchText, statusFilter } = this.filterForm.value;
+
     this.filteredBooks = this.books.filter(book => {
       const matchesSearch =
         book.bookName.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -67,35 +70,39 @@ export class Book implements OnInit {
 
       const matchesStatus =
         statusFilter === 'all' ||
-        (statusFilter === 'borrowed' && book.borrowed) ||
-        (statusFilter === 'available' && !book.borrowed);
+        (statusFilter === 'borrowed' && book.availableCopies === 0) ||
+        (statusFilter === 'available' && book.availableCopies > 0);
 
       return matchesSearch && matchesStatus;
     });
   }
 
   resetFilters(): void {
-    this.filterForm.setValue({ searchText: '', statusFilter: 'available' });
+    this.filterForm.setValue({ searchText: '', statusFilter: 'all' });
     this.filteredBooks = [...this.books];
   }
 
   borrowBook(book: BookModel): void {
-    if (!this.studentId) {
-      this.showToast('No student logged in!', 'error');
+    if (book.availableCopies <= 0) {
+      this.showToast('No available copies to borrow!', 'error');
       return;
     }
 
     this.http.post(`http://localhost:8080/api/student/book/borrow`, null, {
       params: {
-        bookId: book.bookId.toString(),
-        studentId: this.studentId.toString()
+        bookId: book.bookId,
+        studentId: this.studentId
       }
     }).subscribe({
       next: (res: any) => {
         this.showToast(res.message, 'success');
-        book.borrowed = true;
+        book.availableCopies -= 1;
+
+        if (book.availableCopies === 0) {
+          book.borrowed = true;
+        }
       },
-      error: (err: any) => {
+      error: err => {
         this.showToast(err.error?.message || 'Error borrowing book', 'error');
       }
     });
@@ -104,9 +111,10 @@ export class Book implements OnInit {
   showToast(message: string, type: 'success' | 'error' | 'info' = 'info') {
     this.snackBar.open(message, 'Close', {
       duration: 3000,
-      horizontalPosition: 'right',
+      horizontalPosition: 'center',
       verticalPosition: 'top',
       panelClass: [`toast-${type}`] 
     });
   }
+
 }

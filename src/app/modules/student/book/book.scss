@@ -65,6 +65,24 @@
   color: #fff !important;
 }
 
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.filter-section {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .search-box,
 .status-select,
 .reset-button {
@@ -151,7 +169,7 @@
 }
 
 .unavailable-text {
-  color: #777;
+  color: #dd1919;
   font-size: 0.9rem;
 }
 

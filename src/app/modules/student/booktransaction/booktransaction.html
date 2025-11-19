@@ -35,7 +35,12 @@
       }@else{
         <td>--</td>
       }
-      <td>{{ record.pay ? 'Yes' : 'No' }}</td>
+      @if(record.fine > 0){
+        <td>{{ record.pay ? 'Yes' : 'No' }}</td>
+      }
+      @else {
+        <td>--</td>
+      }
       <td>
         @if(!record.returned){
           <button (click)="handleReturn(record)">Return</button>

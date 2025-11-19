@@ -1,16 +1,23 @@
 <div class="container">
   <button type="button" class="add-btn" (click)="openForm()">Add +</button>
-
-  <div class="modal-overlay" *ngIf="add || editMode" (click)="closeForm()"></div>
-
-  <div class="modal-box" *ngIf="add || editMode">
+  @if(add || editMode){
+    <div class="modal-overlay" (click)="closeForm()"></div>
+  }
+  
+  @if(add || editMode){
+  <div class="modal-box" >
     <form [formGroup]="bookForm" class="modal-content" (click)="$event.stopPropagation()">
       <h3>{{ editMode ? 'Edit Book' : 'Add New Book' }}</h3>
 
       <input formControlName="bookName" placeholder="Book Name" />
       <input formControlName="author" placeholder="Author" />
       <input formControlName="category" placeholder="Category" />
-
+      <input type="number" formControlName="totalBook" placeholder="Total Copies" min="1" />
+      @if(!editMode){
+        <input type="number" formControlName="available" placeholder="Available Copies" min="0" />
+      }
+      
+      
       <div class="modal-actions">
         <button type="button" class="btn primary" (click)="addOrUpdateBook()">
           {{ editMode ? 'Update' : 'Add' }}
@@ -19,6 +26,7 @@
       </div>
     </form>
   </div>
+}
 
   <form [formGroup]="filterForm" class="filter-form">
     <input type="text" placeholder="Search books..." formControlName="searchText" />
@@ -37,8 +45,13 @@
       <p><strong>Name:</strong> {{ book.bookName }}</p>
       <p><strong>Author:</strong> {{ book.author }}</p>
       <p><strong>Category:</strong> {{ book.category }}</p>
-      <p><strong>Status:</strong> {{ book.borrowed ? 'Borrowed' : 'Available' }}</p>
-
+      <p><strong>Total Books:</strong> {{ book.totalBook }}</p>
+      <p><strong>Available Book:</strong> {{ book.available }}</p>
+        <p><strong>Status:</strong>
+        <span [ngClass]="book.available === 0 ? 'status-borrowed' : 'status-available'">
+          {{ book.available === 0 ? 'Borrowed' : 'Available' }}
+        </span>
+      </p>
       <button (click)="editBook(book)">Edit</button>
       <button (click)="deleteBook(book.bookId!)">Delete</button>
     </div>

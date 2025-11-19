@@ -9,9 +9,9 @@
       <form [formGroup]="filterForm" class="filter-section">
         <input formControlName="searchText" placeholder="Search by ID, title or author" class="search-box"/>
         <select formControlName="statusFilter" class="status-select">
+          <option value="all">All</option>
           <option value="available">Available</option>
           <option value="borrowed">Borrowed</option>
-          <option value="all">All</option>
         </select>
         <button type="button" (click)="resetFilters()" class="reset-button">Reset</button>
       </form>
@@ -19,23 +19,30 @@
 
     <div class="book-list">
       @for (book of filteredBooks; track book.bookId) {
-      <div   class="book-card" 
-           [ngClass]="book.borrowed ? 'borrowed-book' : 'available-book'">
+      <div class="book-card" 
+           [ngClass]="book.availableCopies > 0 ? 'available-book' : 'borrowed-book'">
+
         <div class="book-details">
           <p><strong>Book ID:</strong> {{ book.bookId }}</p>
           <p><strong>Book Name:</strong> {{ book.bookName }}</p>
           <p><strong>Author:</strong> {{ book.author }}</p>
-          <p><strong>Status:</strong> {{ book.borrowed ? 'Borrowed' : 'Available' }}</p>
+          <p><strong>Available Copies:</strong> {{ book.availableCopies }}</p>
+
+          <p><strong>Status:</strong> 
+            {{ book.availableCopies > 0 ? 'Available' : 'All Borrowed' }}
+          </p>
         </div>
+
         <div class="book-action">
-          @if(!book.borrowed){
+          @if(book.availableCopies > 0){
             <button (click)="borrowBook(book)" class="borrow-button">Borrow</button>
-          }@else {
+          } @else {
             <span class="unavailable-text">Unavailable</span>
           }
         </div>
       </div>
-    }
+      }
+
       @if (filteredBooks.length==0) {
         <div class="no-results">
           No books match your search/filter.

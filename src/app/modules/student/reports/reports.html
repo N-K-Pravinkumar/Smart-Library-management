@@ -45,15 +45,13 @@
             </span>
           </td>
           <td>
-            @if(record.daysRemaining>0){
+            @if(record.fine > 0){
               <span [ngClass]="record.daysRemaining < 0 ? 'overdue' : 'due-soon'">
               {{ (record.daysRemaining + ' days left') }}
             </span>
             }
             @else {
-              <span>
-              --
-            </span>
+              <span>--</span>
             }
             
           </td>
