@@ -1,30 +1,35 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { BorrowService } from "../../../services/borrow-service";
 import { BorrowRecord } from "../../../services/borrow-service";
-
+import{MatSnackBar,MatSnackBarModule} from'@angular/material/snack-bar';
 @Component({
   selector: 'app-book-transaction',
   templateUrl: './booktransaction.html',
   styleUrls: ['./booktransaction.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule,MatSnackBarModule],
 })
 export class Booktransaction implements OnInit {
   records: BorrowRecord[] = [];
   filteredRecords: BorrowRecord[] = [];
   filterForm!: FormGroup;
   loggedInUserId!: string;
+    // private snackBar = inject(MatSnackBar);
+  private snackBar= inject(MatSnackBar);
+    trackByBorrowId = (index: number, record: BorrowRecord) => record.borrowId;
 
   constructor(private fb: FormBuilder, private borrowService: BorrowService) {}
 
   ngOnInit(): void {
     this.filterForm = this.fb.group({ searchText: [''] });
 
-    const studentIdStr = sessionStorage.getItem('userId');
-    if (!studentIdStr) { alert('No student logged in'); return; }
+    const studentIdStr = localStorage.getItem('userId');
+    if (!studentIdStr){
+       this.showToast('No student logged in','error');
+        return; }
     this.loggedInUserId = studentIdStr;
 
     this.loadTransactions();
@@ -64,11 +69,11 @@ export class Booktransaction implements OnInit {
       next: () => {
         record.returned = true; 
         this.returnBook(record);
-        alert('Book returned successfully!');
+        this.showToast('Book returned successfully!');
       },
       error: (err) => {
         console.error(err);
-        alert('Failed to return the book.');
+        this.showToast('Failed to return the book.');
       }
     });
   }
@@ -87,7 +92,7 @@ handleReturn(record: BorrowRecord) {
       },
       error: err => {
         console.error('Error paying fine:', err);
-        alert('Failed to pay fine. Try again.');
+        this.showToast('Failed to pay fine. Try again.');
       }
     });
   } else {
@@ -107,16 +112,35 @@ private returnBook(record: BorrowRecord) {
         this.records = [...this.records];
         this.filteredRecords = [...this.filteredRecords];
 
-        alert('Book returned successfully!');
+        this.showToast('Book returned successfully!');
       },
       error: err => {
         console.error('Error returning book:', err);
-        alert('Failed to return the book. Try again.');
+        this.showToast('Failed to return the book. Try again.');
       }
     });
   }
 }
 
+// showToast(message:string,type:'success'|'error'|'info'='info'){
+//   this.snackBar.open(message,'Close',
+//     {
+//       duration:3000,
+//       validateHorizontalPosition:'center',
+//       verticalPosition:'top',
+//       panelClass:type==='success'?'toast-success':type==='error'?'toast-error':'toast-info'
+//     }
+//   );
+// }
+
+  showToast(message: string, type: 'success' | 'error' | 'info' = 'info') {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: [`toast-${type}`] 
+    });
+  }
 
 
 

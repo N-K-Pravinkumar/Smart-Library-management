@@ -1,7 +1,9 @@
-import { Component, OnInit, TrackByFunction } from '@angular/core';
+import { Component, inject, OnInit, TrackByFunction } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface BookModel {
   bookId?: number;
@@ -17,7 +19,7 @@ interface BookModel {
 @Component({
   selector: 'app-book',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,MatSnackBarModule,HttpClientModule],
   templateUrl: './book.html',
   styleUrls: ['./book.scss']
 })
@@ -31,6 +33,9 @@ export class Book implements OnInit {
   add = false;
   editMode = false;
   selectedBookId?: number;
+
+  
+  private snackBar =  inject( MatSnackBar);
 
   trackByBookId: TrackByFunction<BookModel> = (index, book) => book.bookId ?? index;
 
@@ -121,7 +126,7 @@ export class Book implements OnInit {
     if (this.editMode && this.selectedBookId) {
       this.http.patch(`${this.apiBase}/${this.selectedBookId}`, payload).subscribe({
         next: () => {
-          alert('Book updated successfully!');
+          this.showToast('Book updated successfully!');
           this.editMode = false;
           this.selectedBookId = undefined;
           this.bookForm.reset();
@@ -131,13 +136,13 @@ export class Book implements OnInit {
         },
         error: err => {
           console.error(err);
-          alert('Failed to update book.');
+        this.showToast('Failed to update book.');
         }
       });
     } else {
       this.http.post(this.apiBase, payload).subscribe({
         next: () => {
-          alert('Book added successfully!');
+          this.showToast('Book added successfully!');
           this.add = false;
           this.bookForm.reset();
           this.bookForm.patchValue({ totalBook: 1, available: 1, borrowed: false, returned: true });
@@ -145,7 +150,7 @@ export class Book implements OnInit {
         },
         error: err => {
           console.error(err);
-          alert('Failed to add book.');
+          this.showToast('Failed to add book.');
         }
       });
     }
@@ -185,13 +190,22 @@ export class Book implements OnInit {
 
     this.http.delete(`${this.apiBase}/${bookId}`).subscribe({
       next: () => {
-        alert('Book deleted successfully!');
+        this.showToast('Book deleted successfully!');
         this.loadBooks();
       },
       error: err => {
         console.error(err);
-        alert('Failed to delete book.');
+        this.showToast('Failed to delete book.');
       }
+    });
+  }
+
+   showToast(message: string, type: 'success' | 'error' | 'info' = 'info') {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: [`toast-${type}`]
     });
   }
 }
