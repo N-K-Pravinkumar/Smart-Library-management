@@ -2,10 +2,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:Arial, sans-serif;
 }
 
-/* ------------------ TOP NAVBAR ------------------ */
 .navtop {
   position: fixed;
   top: 0;
@@ -25,7 +24,6 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Progress Bar */
 .progress-container {
   position: fixed;
   top: 60px;           
@@ -42,7 +40,6 @@
   background: #4fa8db;
 }
 
-/* ------------------ LEFT SIDEBAR ------------------ */
 .navleft {
   position: fixed;
   top: 0;
@@ -57,7 +54,6 @@
   gap: 10px;
 }
 
-/* Sidebar links */
 .navleft a {
   text-decoration: none;
   color: #0a0303;
@@ -74,15 +70,13 @@
   color: #2c82d6;
 }
 
-/* Username text in navbar */
 .username {
   font-size: 16px;
-  font-family: monospace;
+  font-family: Arial, sans-serif;
   color: #444;
   margin-right: 10px;
 }
 
-/* Logout button */
 .logout {
   margin-top: auto;
   margin-left: 20px;
@@ -100,7 +94,6 @@
   background-color: #8c4740;
 }
 
-/* ------------------ CONTENT AREA ------------------ */
 .contentarea {
   margin-left: 220px;
   margin-top: 60px;

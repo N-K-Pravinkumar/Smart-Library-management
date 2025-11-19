@@ -1,131 +1,130 @@
 .container {
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 0 15px;
+  max-width: 62.5rem;
+  margin: 1.25rem auto;
+  padding: 0 1rem;
   font-family: Arial, sans-serif;
 }
- 
+
 h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
- 
+
 .filter-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 0.625rem;
+  margin-bottom: 1rem;
 }
- 
+
 .search-row {
   display: flex;
-  gap: 10px;
+  gap: 0.625rem;
   flex-wrap: wrap;
 }
- 
+
 .search-select,
 .search-input {
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.375rem 0.625rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.25rem;
   flex: 1;
-  min-width: 150px;
+  min-width: 9.375rem;
 }
- 
+
 .filter-buttons {
   display: flex;
-  gap: 10px;
+  gap: 0.625rem;
 }
- 
+
 .filter-buttons button {
-  padding: 6px 12px;
+  padding: 0.375rem 0.75rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: #eee;
   cursor: pointer;
 }
- 
+
 .filter-buttons button.active {
   background-color: #007bff;
   color: white;
 }
- 
+
 .download-btn {
-  padding: 6px 12px;
-  margin-bottom: 15px;
+  padding: 0.375rem 0.75rem;
+  margin-bottom: 1rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: #28a745;
   color: white;
   cursor: pointer;
 }
- 
+
 .download-btn:hover {
   background-color: #218838;
 }
- 
+
 #reportTable {
   overflow-x: auto;
 }
- 
+
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
- 
+
 thead th {
   background-color: #f2f2f2;
-  padding: 8px;
+  padding: 0.5rem;
   text-align: left;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 0.125rem solid #ddd;
 }
- 
+
 tbody td {
-  padding: 8px;
-  border-bottom: 1px solid #eee;
+  padding: 0.5rem;
+  border-bottom: 0.0625rem solid #eee;
 }
- 
+
 tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
- 
+
 .returned {
   color: green;
   font-weight: bold;
 }
- 
+
 .borrowed {
   color: orange;
   font-weight: bold;
 }
- 
+
 .overdue {
   color: red;
   font-weight: bold;
 }
- 
+
 .due-soon {
   color: #007bff;
 }
- 
+
 .text-muted {
   color: #888;
 }
- 
+
 .total-fine {
   text-align: right;
-  font-size: 16px;
-  margin-top: 10px;
+  font-size: 1rem;
+  margin-top: 0.625rem;
   font-weight: bold;
 }
- 
+
 .fade-in {
   animation: fadeIn 0.5s ease-in;
 }
- 
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
- 

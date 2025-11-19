@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+  padding: 2rem; 
 }
 
 .dashboard {
@@ -13,35 +13,36 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 1.25rem; 
 }
 
 .card {
   background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  width: 220px;
-  padding: 20px;
+  border-radius: 1rem; 
+  box-shadow: 0 0.25rem 0.625rem rgba(0,0,0,0.15);
+  width: 20%; 
+  min-width: 16rem; 
+  padding: 1.25rem; 
   transition: 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-0.4rem);
 }
 
 .count {
   color: #333;
   font-size: 2rem;
-  margin: 10px 0;
+  margin: 1rem 0; 
 }
 
-.total-books { border-top: 5px solid #007bff; }
-.borrowed { border-top: 5px solid #28a745; }
-.to-return { border-top: 5px solid #ffc107; }
-.fine { border-top: 5px solid #dc3545; }
+.total-books { border-top: 0.3rem solid #007bff; } 
+.borrowed { border-top: 0.3rem solid #28a745; }
+.to-return { border-top: 0.3rem solid #ffc107; }
+.fine { border-top: 0.3rem solid #dc3545; }
 
 .top {
-  margin-top: 30px;
+  margin-top: 2rem; 
   font-style: italic;
   color: #444;
 }

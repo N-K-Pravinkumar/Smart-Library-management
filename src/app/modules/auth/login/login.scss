@@ -3,7 +3,7 @@
   height: 100vh;
   background-color: #cccccc;
 }
- 
+
 .login-image {
   flex: 1;
   background-color: #f5f3eb;
@@ -11,12 +11,12 @@
   align-items: center;
   justify-content: center;
 }
- 
+
 .login-image img {
   width: 70%;
-  max-width: 400px;
+  max-width: 25rem; 
 }
- 
+
 .login-form {
   flex: 1;
   background-color: #001f4d; 
@@ -25,70 +25,69 @@
   justify-content: center;
   color: white;
 }
- 
+
 .form-card {
   width: 80%;
-  max-width: 380px;
+  max-width: 23.75rem; 
   text-align: center;
 }
- 
+
 h2 {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem; 
   color: white;
 }
- 
+
 .input-group {
-  margin-bottom: 15px;
+  margin-bottom: 0.94rem;
 }
- 
+
 .input-group input {
   width: 100%;
-  padding: 12px 15px;
-  border-radius: 25px;
+  padding: 0.75rem 0.94rem;
+  border-radius: 1.56rem; 
   border: none;
   outline: none;
   background-color: white;
-  font-size: 14px;
+  font-size: 0.88rem; 
 }
- 
+
 .btnregister {
-  // width: 100%;
   width: 10rem;
   align-items: center;
   background-color: #ff6600; 
   color: white;
-  padding: 7px;
+  padding: 0.44rem; 
   border: none;
-  border-radius: 25px;
+  border-radius: 1.56rem; 
   font-weight: bold;
   cursor: pointer;
   margin-left: 2rem;
   transition: 0.3s;
 }
- 
+
 .btnregister:hover {
   background-color: #ff4500;
 }
- 
+
 .error {
   color: #ff6666;
-  font-size: 14px;
-  margin-top: 5px;
+  font-size: 0.88rem; 
+  margin-top: 0.31rem; 
 }
- 
+
 .login-text {
-  margin-top: 15px;
-  font-size: 14px;
+  margin-top: 0.94rem; 
+  font-size: 0.88rem;
   margin-left: 2.5rem;
 }
- 
+
 .login-text a {
   color: #ff6600;
   text-decoration: none;
   cursor: pointer;
 }
- 
+
 .imgg {
-  height: 100px;
-  width: 100px;
+  height: 6.25rem; 
+  width: 6.25rem; 
 }

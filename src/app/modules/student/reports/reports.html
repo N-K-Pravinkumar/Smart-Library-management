@@ -27,7 +27,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let record of filteredRecords">
+        @for(record of filteredRecords; track record.bookId){
+        <tr>
           <td>{{ record.bookId }}</td>
           <td>{{ record.bookName }}</td>
           <td>{{ record.borrowDate | date:'mediumDate' }}</td>
@@ -46,7 +47,7 @@
           </td>
           <td>
             @if(record.fine > 0){
-              <span [ngClass]="record.daysRemaining < 0 ? 'overdue' : 'due-soon'">
+              <span [ngClass]="record.daysRemaining > 0 ? 'overdue' : 'due-soon'">
               {{ (record.daysRemaining + ' days left') }}
             </span>
             }
@@ -62,6 +63,7 @@
             <td>--</td>
           }
         </tr>
+        }
       </tbody>
     </table>
 
