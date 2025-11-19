@@ -12,7 +12,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./layout.scss']
 })
 export class Layout implements OnInit {
-  username = localStorage.getItem('username') || '';
+  username = sessionStorage.getItem('username') || '';
   role: 'librarian' | 'student' | '' = '';
   baseRoute = '';
    scrollWidth = 0;
@@ -28,9 +28,9 @@ export class Layout implements OnInit {
   }
   
   loadUserInfo(): void {
-    const storedRole = localStorage.getItem('role');
-    const storedUsername = localStorage.getItem('username');
-    const studentIdStr = localStorage.getItem('token');
+    const storedRole = sessionStorage.getItem('role');
+    const storedUsername = sessionStorage.getItem('username');
+    const studentIdStr = sessionStorage.getItem('token');
     if (!studentIdStr || !storedRole) {
       //alert('No logged in. Please login first.');
       this.router.navigate(['/login']);
@@ -50,7 +50,7 @@ export class Layout implements OnInit {
   }
 
   logout(): void {
-    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigate(['/login']);
   }
   @HostListener('window:scroll', [])

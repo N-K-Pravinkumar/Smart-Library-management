@@ -38,7 +38,7 @@ export class Book implements OnInit {
   }
 
   ngOnInit(): void {
-    const storedId = localStorage.getItem('userId');
+    const storedId = sessionStorage.getItem('userId');
     if (!storedId) {
       this.showToast('No student logged in!', 'error');
       return;

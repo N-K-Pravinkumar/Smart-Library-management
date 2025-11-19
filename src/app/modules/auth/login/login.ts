@@ -52,14 +52,14 @@ export class Login {
       next: (res) => {
         this.loading = false;
 
-        localStorage.setItem('token', res.token || '');
-        localStorage.setItem('username', res.username || '');
+        sessionStorage.setItem('token', res.token || '');
+        sessionStorage.setItem('username', res.username || '');
 
         const role = res.role?.toLowerCase() || '';
-        localStorage.setItem('role', role);
+        sessionStorage.setItem('role', role);
 
         if (role === 'student' && res.id != null) {
-          localStorage.setItem('userId', res.id.toString());
+          sessionStorage.setItem('userId', res.id.toString());
           this.router.navigateByUrl('/student/home');
         } else if (role === 'librarian') {
           this.router.navigateByUrl('/librarian/home');

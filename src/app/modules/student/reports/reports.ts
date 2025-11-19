@@ -23,7 +23,7 @@ export class Reports implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const storedId = localStorage.getItem('userId');
+    const storedId = sessionStorage.getItem('userId');
     if (!storedId) {
       alert('No student logged in. Please login first.');
       return;

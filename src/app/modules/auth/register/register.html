@@ -14,9 +14,11 @@
           formControlName="username"
           placeholder="Enter username"
         />
-        <small class="error" *ngIf="username.invalid && (username.touched || username.dirty)">
-          Username is required.
-        </small>
+        @if(username.invalid && (username.touched || username.dirty)){
+          <small class="error">
+            Username is required.
+          </small>
+        }
       </div>
 
       <div class="input-group">
@@ -25,9 +27,11 @@
           formControlName="email"
           placeholder="Enter email"
         />
-        <small class="error" *ngIf="email.invalid && (email.touched || email.dirty)">
-          Enter a valid email.
-        </small>
+        @if(email.invalid && (email.touched || email.dirty)){
+          <small class="error">
+            Enter a valid email.
+          </small>
+        }
       </div>
 
       <div class="input-group">
@@ -36,9 +40,11 @@
           formControlName="password"
           placeholder="Enter password"
         />
-        <small class="error" *ngIf="password.invalid && (password.touched || password.dirty)">
-          Password must be at least 5 characters.
-        </small>
+        @if(password.invalid && (password.touched || password.dirty)){
+          <small class="error">
+            Password must be at least 5 characters.
+          </small>
+        }
       </div>
       <div class="inp">
       <div class="input-group">
@@ -47,9 +53,11 @@
           <option value="Student">Student</option>
           <option value="Librarian">Librarian</option>
         </select>
-        <small class="error" *ngIf="role.invalid && (role.touched || role.dirty)">
-          Please select a role.
-        </small>
+        @if(role.invalid && (role.touched || role.dirty)){
+          <small class="error">
+            Please select a role.
+          </small>
+        }
       </div>
       </div>
 
@@ -60,8 +68,9 @@
       >
         {{ loading ? 'Registering...' : 'Sign Up' }}
       </button>
-
-      <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+      @if(errorMessage){
+        <p class="error">{{ errorMessage }}</p>
+      }
 
       <p class="login-text">
         Already have an account? <a routerLink="/login">Login In</a>
